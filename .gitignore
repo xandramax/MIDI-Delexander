@@ -1,0 +1,8 @@
+/build
+/dist
+/.vscode
+/plugin.so
+/plugin.dylib
+plugin.dll
+.DS_Store
+MIDI-Delexander.code-workspace

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0beta2 (368ca91, 2020-02-26)"
+   sodipodi:docname="DLXmoDllzSwitchLed_1.svg"
+   id="svg25550"
+   version="1.1"
+   viewBox="0 0 10 18"
+   height="18px"
+   width="10px">
+  <metadata
+     id="metadata25556">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs25554" />
+  <sodipodi:namedview
+     inkscape:document-rotation="0"
+     inkscape:current-layer="svg25550"
+     inkscape:window-maximized="1"
+     inkscape:window-y="-8"
+     inkscape:window-x="-8"
+     inkscape:cy="7.1561097"
+     inkscape:cx="0.84930246"
+     inkscape:zoom="37.083822"
+     showgrid="false"
+     id="namedview25552"
+     inkscape:window-height="1058"
+     inkscape:window-width="1920"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
+  <rect
+     transform="scale(1,-1)"
+     ry="5"
+     style="fill:#cccccc;fill-opacity:1"
+     rx="5"
+     height="18"
+     width="10"
+     y="-18"
+     x="0"
+     id="hole" />
+  <circle
+     transform="scale(1,-1)"
+     style="fill:#8b70a2;stroke:#635073;stroke-width:1;stroke-opacity:1;fill-opacity:1"
+     r="29%"
+     cy="-5.039999"
+     cx="5"
+     id="led" />
+  <circle
+     transform="scale(1,-1)"
+     style="opacity:0.7;fill:#cccccc;fill-opacity:1"
+     r="10%"
+     cy="-3.7382362"
+     cx="5"
+     id="hi" />
+  <circle
+     transform="scale(1,-1)"
+     style="opacity:1;fill:#f2f2f2;fill-opacity:1"
+     r="3%"
+     cy="-3.1278033"
+     cx="5"
+     id="circle25548" />
+</svg>

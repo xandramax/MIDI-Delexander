@@ -1,0 +1,39 @@
+{
+  "slug": "MIDIDelexander",
+  "name": "MIDI Delexander",
+  "version": "1.1.0",
+  "license": "GPL-3.0-only",
+  "brand": "Delexander",
+  "author": "Anthony Lexander Matos",
+  "authorEmail": "",
+  "authorUrl": "",
+  "pluginUrl": "",
+  "manualUrl": "",
+  "sourceUrl": "",
+  "donateUrl": "",
+  "changelogUrl": "",
+  "disabled": true,
+  "modules": [
+    {
+			"slug": "SuperMIDI64",
+			"name": "Super MIDI 64",
+			"description": "Polyphonic MIDI with MPE mode and 64-note polyphony",
+			"tags": [
+				"MIDI",
+				"External",
+				"Multiple",
+				"Polyphonic"
+			]
+		},
+    {
+      "slug": "XanderMIDI_CV",
+      "name": "XanderMIDI-CV",
+      "description": "Converts MIDI from an external device to CV and gates, with rotating MPE mode",
+      "tags": [
+        "External",
+        "MIDI",
+        "Polyphonic"
+      ]
+    }
+  ]
+}
