@@ -1828,7 +1828,7 @@ struct SuperMIDI64Widget : ModuleWidget {
 		// PBend Out
 		yPos = 154.505f;
 		xPos = (264.402f + 4.178);
-		addOutput(createOutput<DLXPortG>(Vec(xPos, yPos),  module, SuperMIDI64::PBEND_OUTPUT));
+		addOutput(createOutput<DLXPortG>(Vec(xPos, yPos), module, SuperMIDI64::PBEND_OUTPUT));
 		// CC's x 20
 		for ( int r = 0; r < 5; r++){
 			for ( int i = 0; i < 4; i++){
@@ -1838,8 +1838,8 @@ struct SuperMIDI64Widget : ModuleWidget {
 					MccDisplay->displayID = dispID ++;
 					MccDisplay->module = module;
 					addChild(MccDisplay);
-				}
-				addOutput(createOutput<DLXPortG>(Vec(module->coords[SuperMIDI64::CC_LCD + i + 4*r].x + 3.5f, module->coords[SuperMIDI64::CC_LCD + i + 4*r].y + 13.f),  module, SuperMIDI64::MM_OUTPUT + i + 4 * r));
+					addOutput(createOutput<DLXPortG>(Vec(module->coords[SuperMIDI64::CC_LCD + i + 4*r].x + 3.5f, module->coords[SuperMIDI64::CC_LCD + i + 4*r].y + 13.f),  module, SuperMIDI64::MM_OUTPUT + i + 4 * r));
+				}	
 			}
 		}
 	}

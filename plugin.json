@@ -1,5 +1,5 @@
 {
-  "slug": "MIDIDelexander",
+  "slug": "MIDI-Delexander",
   "name": "MIDI Delexander",
   "version": "1.0",
   "license": "GPL-3.0-only",
@@ -12,7 +12,7 @@
   "sourceUrl": "",
   "donateUrl": "",
   "changelogUrl": "",
-  "disabled": true,
+  "disabled": false,
   "modules": [
     {
 			"slug": "SuperMIDI64",
@@ -24,16 +24,6 @@
 				"Multiple",
 				"Polyphonic"
 			]
-		},
-    {
-      "slug": "XanderMIDI_CV",
-      "name": "XanderMIDI-CV",
-      "description": "Converts MIDI from an external device to CV and gates, with rotating MPE mode",
-      "tags": [
-        "External",
-        "MIDI",
-        "Polyphonic"
-      ]
-    }
+		}
   ]
 }
