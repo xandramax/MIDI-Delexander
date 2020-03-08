@@ -46,26 +46,6 @@ struct TranspOffRedLight : ModuleLightWidget {
 	}
 };
 /// UpDown + - Buttons
-struct minusButton : SvgSwitch {
-	minusButton() {
-		momentary = true;
-		addFrame(APP->window->loadSvg(asset::plugin(pluginInstance, "res/DLXminusButton_0.svg")));
-		addFrame(APP->window->loadSvg(asset::plugin(pluginInstance, "res/DLXminusButton_1.svg")));
-		shadow->opacity = 0.f;
-	}
-	void randomize() override{
-	}
-};
-struct plusButton : SvgSwitch {
-	plusButton() {
-		momentary = true;
-		addFrame(APP->window->loadSvg(asset::plugin(pluginInstance, "res/DLXplusButton_0.svg")));
-		addFrame(APP->window->loadSvg(asset::plugin(pluginInstance, "res/DLXplusButton_1.svg")));
-		shadow->opacity = 0.f;
-	}
-	void randomize() override{
-	}
-};
 struct minusButtonB : SvgSwitch {
 	minusButtonB() {
 		momentary = true;

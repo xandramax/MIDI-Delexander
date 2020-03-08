@@ -7,48 +7,49 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   inkscape:version="1.0beta2 (368ca91, 2020-02-26)"
-   sodipodi:docname="DLXSqrPlus_1.svg"
-   id="svg31617"
-   style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
-   xml:space="preserve"
+   width="11"
+   height="11"
    version="1.1"
-   height="23px"
-   width="23px"><metadata
+   xml:space="preserve"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
+   id="svg31617"
+   sodipodi:docname="DLXSqrPlus_1.svg"
+   inkscape:version="1.0beta2 (368ca91, 2020-02-26)"><metadata
    id="metadata31623"><rdf:RDF><cc:Work
        rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
          rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
    id="defs31621" /><sodipodi:namedview
-   inkscape:document-rotation="0"
-   inkscape:current-layer="svg31617"
-   inkscape:window-maximized="1"
-   inkscape:window-y="-8"
-   inkscape:window-x="-8"
-   inkscape:cy="11.5"
-   inkscape:cx="7.9427966"
-   inkscape:zoom="10.26087"
-   showgrid="false"
-   id="namedview31619"
-   inkscape:window-height="1058"
-   inkscape:window-width="1920"
-   inkscape:pageshadow="2"
-   inkscape:pageopacity="0"
-   guidetolerance="10"
-   gridtolerance="10"
-   objecttolerance="10"
-   borderopacity="1"
+   pagecolor="#ffffff"
    bordercolor="#666666"
-   pagecolor="#ffffff" />
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1920"
+   inkscape:window-height="1058"
+   id="namedview31619"
+   showgrid="false"
+   inkscape:zoom="10.26087"
+   inkscape:cx="7.9427966"
+   inkscape:cy="11.5"
+   inkscape:window-x="-8"
+   inkscape:window-y="-8"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="svg31617"
+   inkscape:document-rotation="0" />
     <g
-   transform="matrix(0.96305277,0,0,0.97519246,0.56006155,0.20124514)"
-   style="fill:#c4c8b7;stroke-width:1.03188145"
-   id="g31615">
+   id="g31615"
+   style="fill:#c4c8b7;stroke-width:1.03188"
+   transform="matrix(0.96305277,0,0,0.97519246,0.56006155,0.20124514)">
         
         
         
         
     </g>
 <path
-   d="M 10.054688 6.625 L 10.054688 10.037109 L 6.6855469 10.037109 L 6.6855469 12.962891 L 10.054688 12.962891 L 10.054688 16.375 L 12.945312 16.375 L 12.945312 12.962891 L 16.314453 12.962891 L 16.314453 10.037109 L 12.945312 10.037109 L 12.945312 6.625 L 10.054688 6.625 z "
+   inkscape:connector-curvature="0"
+   id="rect31611"
    style="clip-rule:evenodd;fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#765c84;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:2;stroke-opacity:1"
-   id="rect31611" /></svg>
+   d="M 4.0546881,0.625 V 4.037109 H 0.68554695 V 6.962891 H 4.0546881 V 10.375 h 2.890624 V 6.962891 H 10.314453 V 4.037109 H 6.945312 V 0.625 Z" /></svg>

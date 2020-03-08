@@ -97,8 +97,8 @@ struct SuperMIDI64 : Module {
 		NUM_LCDS_SELECTORS
 	};
 	Vec coords[NUM_LCDS_SELECTORS] = {
-		Vec(7.953f, 20.f),																										//MIDI_LCD
-		Vec(7.953f, 62.f),																										//POLYMODE_LCD
+		Vec(8.875f, 20.f),																										//MIDI_LCD
+		Vec(8.875f, 62.f),																										//POLYMODE_LCD
 		Vec(coords[POLYMODE_LCD].x + 1.f,		coords[POLYMODE_LCD].y + 11.f),		//POLYMODE_SELECTOR
 		Vec(coords[POLYMODE_LCD].x + 1.f,		coords[POLYMODE_LCD].y + 24.f),		//VOICES_SELECTOR
 		Vec(coords[POLYMODE_LCD].x + 67.f, 	coords[POLYMODE_LCD].y + 24.f),		//OUTS_SELECTOR
@@ -106,13 +106,13 @@ struct SuperMIDI64 : Module {
 		Vec(coords[POLYMODE_LCD].x + 48.f, 	coords[POLYMODE_LCD].y + 37.f),		//NOTE_RANGE_SELECTOR 2
 		Vec(coords[POLYMODE_LCD].x + 93.f, 	coords[POLYMODE_LCD].y + 37.f),		//VEL_RANGE_SELECTOR 1
 		Vec(coords[POLYMODE_LCD].x + 113.f, coords[POLYMODE_LCD].y + 37.f),		//VEL_RANGE_SELECTOR 2
-		Vec(204.578f, 65.222f),																								//Y_LCD
+		Vec(207.336f +.5f, 67.135f +.5f),		// +.5 to SVG components					//Y_LCD
 		Vec(coords[Y_LCD].x, coords[Y_LCD].y + 43.9f),												//Z_LCD
 		Vec(coords[Y_LCD].x, coords[Y_LCD].y + 117.859),											//RELVEL_LCD
-		Vec(160.55f, 159.505f),																								//TRNSP_LCD
+		Vec(163.887f +.5f, 161.425f +.5f),	// +.5 to SVG components					//TRNSP_LCD
 		Vec(coords[TRNSP_LCD].x + 30.1f, coords[TRNSP_LCD].y),								//PBEND_LCD 1
 		Vec(coords[TRNSP_LCD].x + 55.1f, coords[TRNSP_LCD].y),								//PBEND_LCD 2
-		Vec(10.5f, 163.987f),																									//CC_LCD 1
+		Vec(11.661f +.5f, 163.477f +.5f),		// +.5 to SVG components					//CC_LCD 1
 		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD].y),										//CC_LCD 2
 		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD].y),										//CC_LCD 3
 		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD].y),										//CC_LCD 4
@@ -1775,63 +1775,64 @@ struct SuperMIDI64Widget : ModuleWidget {
 				addChild(MccDisplay);
 			}
 		}
-		float yPos = (150.5f - 3.25f);
-		float xPos = (10.5f);
 		// ch Leds x 64
+		float xPos = 8.052f;
+		float yPos = 148.735f;
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 32; j++) {
-				addChild(createLight<TinyLight<TPurpleLight>>(Vec(xPos + j * 4.05f, yPos + i * 6.f), module, SuperMIDI64::CH_LIGHT + j + i*32));
+				addChild(createLight<TinyLight<TPurpleLight>>(Vec(xPos + j * 4.349f, yPos + i * 3.862f), module, SuperMIDI64::CH_LIGHT + j + i*32));
 			}
 		}
-		xPos = (57.953f);
-		yPos = 107.5f;
 		////DATA KNOB + -
+		xPos = 58.697f;
+		yPos = 108.624f;
 		addParam(createParam<springDataKnobC>(Vec(xPos, yPos), module, SuperMIDI64::DATAKNOB_PARAM));
-		yPos = 113.5f;
-		xPos = (24.953f);
+		xPos = 39.606f;
+		yPos = 124.568f;
 		addParam(createParam<minusButtonB>(Vec(xPos, yPos), module, SuperMIDI64::MINUSONE_PARAM));
-		xPos = (103.953f);
+		xPos = 103.148f;
+		yPos = 121.124;
 		addParam(createParam<plusButtonB>(Vec(xPos, yPos), module, SuperMIDI64::PLUSONE_PARAM));
-		yPos = (37.332f - 0.275f);
-		xPos = (167.496f + 1.128f);
 		// X Outs
+		xPos = 173.640f;
+		yPos = 41.022f;
 		for (int i = 0; i < 4; i++)
-			addOutput(createOutput<DLXPortPoly>(Vec(xPos + i * 29.192f, yPos),  module, SuperMIDI64::X_OUTPUT + i));
-		yPos = (81.222f - 0.275f);
+			addOutput(createOutput<DLXPortPoly>(Vec(xPos + i * 29.201f, yPos),  module, SuperMIDI64::X_OUTPUT + i));
 		// Y Outs
+		yPos = 84.911f;
 		for (int i = 0; i < 4; i++)
 			addOutput(createOutput<DLXPortPoly>(Vec(xPos + i * 29.192f, yPos),  module, SuperMIDI64::Y_OUTPUT + i));
-		yPos = (125.112f - 0.275f);
 		// Z Outs
+		yPos = 128.797f;
 		for (int i = 0; i < 4; i++)
 			addOutput(createOutput<DLXPortPoly>(Vec(xPos + i * 29.192f, yPos),  module, SuperMIDI64::Z_OUTPUT + i));
-		yPos = (199.081f - 0.275f);
 		//RVel Outs
+		yPos = 202.770f;
 		for (int i = 0; i < 4; i++)
 			addOutput(createOutput<DLXPortPoly>(Vec(xPos + i * 29.192f, yPos),  module, SuperMIDI64::RVEL_OUTPUT + i));
-		yPos = (242.971f - 0.275f);
 		//Vel Outs
+		yPos = 246.661f;
 		for (int i = 0; i < 4; i++)
 			addOutput(createOutput<DLXPortPoly>(Vec(xPos + i * 29.192f, yPos),  module, SuperMIDI64::VEL_OUTPUT + i));
-		yPos = (286.861f - 0.275f);
 		//Gate Outs
+		yPos = 290.551f;
 		for (int i = 0; i < 4; i++)
 			addOutput(createOutput<DLXPortPoly>(Vec(xPos + i * 29.192f, yPos),  module, SuperMIDI64::GATE_OUTPUT + i));
-		xPos = (209.622f + 4.178);
-		yPos = 334.496;
 		///Sustain hold notes switch
+		xPos = 212.737f;
+		yPos = 334.864f;
 		addParam(createParam<DLXSwitchLed>(Vec(xPos, yPos), module, SuperMIDI64::SUSTHOLD_PARAM));
 		if (module) addChild(createLight<TranspOffRedLight>(Vec(xPos, yPos), module, SuperMIDI64::SUSTHOLD_LIGHT));
-		xPos = (221.264 + 4.178);
 		//Retrig
+		xPos = 232.796f;
 		addParam(createParam<DLXSwitchLed>(Vec(xPos, yPos), module, SuperMIDI64::RETRIG_PARAM));
 		// PBend Out
-		yPos = 154.505f;
-		xPos = (264.402f + 4.178);
+		xPos = 273.563f;
+		yPos = 159.275f;
 		addOutput(createOutput<DLXPortG>(Vec(xPos, yPos), module, SuperMIDI64::PBEND_OUTPUT));
 		// CC's x 20
-		xPos = 10.5f;
-		yPos = 163.987f;
+		xPos = 18.070f;
+		yPos = 179.275f;
 		for ( int r = 0; r < 5; r++){
 			for ( int i = 0; i < 4; i++){
 				if (module){
@@ -1841,7 +1842,7 @@ struct SuperMIDI64Widget : ModuleWidget {
 					MccDisplay->module = module;
 					addChild(MccDisplay);
 				}
-				addOutput(createOutput<DLXPortG>(Vec(xPos + i*33.f + 3.5f, yPos + r*40.f + 13.f),  module, SuperMIDI64::MM_OUTPUT + i + r * 4));
+				addOutput(createOutput<DLXPortG>(Vec(xPos + i*32.921f, yPos + r*39.98f),  module, SuperMIDI64::MM_OUTPUT + i + r * 4));
 			}
 		}
 	}

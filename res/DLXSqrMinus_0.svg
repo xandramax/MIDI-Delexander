@@ -10,23 +10,23 @@
    inkscape:version="1.0beta2 (368ca91, 2020-02-26)"
    sodipodi:docname="DLXSqrMinus_0.svg"
    id="svg29209"
-   style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;"
+   style="clip-rule:evenodd;fill-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2"
    xml:space="preserve"
    version="1.1"
-   height="23px"
-   width="23px"><metadata
+   height="10.641"
+   width="10.641"><metadata
    id="metadata29215"><rdf:RDF><cc:Work
        rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
    id="defs29213" /><sodipodi:namedview
    inkscape:document-rotation="0"
    inkscape:current-layer="svg29209"
    inkscape:window-maximized="1"
    inkscape:window-y="-8"
    inkscape:window-x="-8"
-   inkscape:cy="11.5"
-   inkscape:cx="7.9427966"
-   inkscape:zoom="10.26087"
+   inkscape:cy="9.9876664"
+   inkscape:cx="5.3136433"
+   inkscape:zoom="14.511062"
    showgrid="false"
    id="namedview29211"
    inkscape:window-height="1058"
@@ -41,7 +41,7 @@
    pagecolor="#ffffff" />
     <g
    transform="matrix(0.96409044,0,0,0.97216337,0.48192696,0.1190868)"
-   style="fill:#cccccc;stroke-width:1.03293133;stroke:#765c84;stroke-opacity:1"
+   style="fill:#cccccc;stroke:#765c84;stroke-width:1.03293;stroke-opacity:1"
    id="g29207">
         
         
@@ -49,8 +49,8 @@
     </g>
 <rect
    id="rect29205"
-   style="clip-rule:evenodd;fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke-width:0.99999988;stroke-linejoin:round;stroke-miterlimit:2;stroke:#765c84;stroke-opacity:1"
+   style="clip-rule:evenodd;fill:#cccccc;fill-opacity:1;fill-rule:evenodd;stroke:#765c84;stroke-width:1;stroke-linejoin:round;stroke-miterlimit:2;stroke-opacity:1"
    height="3.1109228"
    width="9.6409044"
-   y="9.9445381"
-   x="6.6795478" /></svg>
+   y="0.5"
+   x="0.50004768" /></svg>

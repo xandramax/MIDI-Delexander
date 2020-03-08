@@ -7,13 +7,13 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   inkscape:version="1.0beta2 (368ca91, 2020-02-26)"
-   sodipodi:docname="DLXmoDllzSwitchLed_1.svg"
-   id="svg25550"
-   version="1.1"
-   viewBox="0 0 10 18"
+   width="10px"
    height="18px"
-   width="10px">
+   viewBox="0 0 10 18"
+   version="1.1"
+   id="svg25550"
+   sodipodi:docname="DLXSwitchLed_1.svg"
+   inkscape:version="1.0beta2 (368ca91, 2020-02-26)">
   <metadata
      id="metadata25556">
     <rdf:RDF>
@@ -22,62 +22,54 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <defs
      id="defs25554" />
   <sodipodi:namedview
-     inkscape:document-rotation="0"
-     inkscape:current-layer="svg25550"
-     inkscape:window-maximized="1"
-     inkscape:window-y="-8"
-     inkscape:window-x="-8"
-     inkscape:cy="7.1561097"
-     inkscape:cx="0.84930246"
-     inkscape:zoom="37.083822"
-     showgrid="false"
-     id="namedview25552"
-     inkscape:window-height="1058"
-     inkscape:window-width="1920"
-     inkscape:pageshadow="2"
-     inkscape:pageopacity="0"
-     guidetolerance="10"
-     gridtolerance="10"
-     objecttolerance="10"
-     borderopacity="1"
+     pagecolor="#ffffff"
      bordercolor="#666666"
-     pagecolor="#ffffff" />
-  <rect
-     transform="scale(1,-1)"
-     ry="5"
-     style="fill:#cccccc;fill-opacity:1"
-     rx="5"
-     height="18"
-     width="10"
-     y="-18"
-     x="0"
-     id="hole" />
-  <circle
-     transform="scale(1,-1)"
-     style="fill:#8b70a2;stroke:#635073;stroke-width:1;stroke-opacity:1;fill-opacity:1"
-     r="29%"
-     cy="-5.039999"
-     cx="5"
-     id="led" />
-  <circle
-     transform="scale(1,-1)"
-     style="opacity:0.7;fill:#cccccc;fill-opacity:1"
-     r="10%"
-     cy="-3.7382362"
-     cx="5"
-     id="hi" />
-  <circle
-     transform="scale(1,-1)"
-     style="opacity:1;fill:#f2f2f2;fill-opacity:1"
-     r="3%"
-     cy="-3.1278033"
-     cx="5"
-     id="circle25548" />
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1058"
+     id="namedview25552"
+     showgrid="false"
+     inkscape:zoom="37.083822"
+     inkscape:cx="0.84930246"
+     inkscape:cy="7.1561097"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg25550"
+     inkscape:document-rotation="0" />
+  <g
+     id="g7261">
+    <path
+       id="hole"
+       style="fill:#cccccc;fill-opacity:1"
+       transform="scale(1,-1)"
+       d="m 5,-18 c 2.77,0 5,2.23 5,5 v 8 C 10,-2.23 7.77,0 5,0 2.23,0 0,-2.23 0,-5 v -8 c 0,-2.77 2.23,-5 5,-5 z" />
+    <path
+       id="led"
+       style="fill:#8b70a2;fill-opacity:1;stroke:#635073;stroke-width:1;stroke-opacity:1"
+       transform="scale(1,-1)"
+       d="M 9.2224636,-5.039999 A 4.2224636,4.2224636 0 0 1 5,-0.8175354 4.2224636,4.2224636 0 0 1 0.77753639,-5.039999 4.2224636,4.2224636 0 0 1 5,-9.2624626 4.2224636,4.2224636 0 0 1 9.2224636,-5.039999" />
+    <path
+       id="hi"
+       style="opacity:0.7;fill:#cccccc;fill-opacity:1"
+       transform="scale(1,-1)"
+       d="M 6.456022,-3.7382362 A 1.456022,1.456022 0 0 1 5,-2.2822142 1.456022,1.456022 0 0 1 3.543978,-3.7382362 1.456022,1.456022 0 0 1 5,-5.1942582 a 1.456022,1.456022 0 0 1 1.456022,1.456022" />
+    <path
+       id="circle25548"
+       style="opacity:1;fill:#f2f2f2;fill-opacity:1"
+       transform="scale(1,-1)"
+       d="M 5.4368066,-3.1278033 A 0.43680659,0.43680659 0 0 1 5,-2.6909967 0.43680659,0.43680659 0 0 1 4.5631934,-3.1278033 0.43680659,0.43680659 0 0 1 5,-3.5646099 0.43680659,0.43680659 0 0 1 5.4368066,-3.1278033" />
+  </g>
 </svg>
