@@ -94,9 +94,9 @@ struct SuperMIDI64 : Module {
 		TRNSP_LCD,
 		ENUMS(PBEND_LCD, 2),
 		ENUMS(CC_LCD, 20),
-		NUM_INDICES
+		NUM_LCDS_SELECTORS
 	};
-	Vec coords[NUM_INDICES] = {
+	Vec coords[NUM_LCDS_SELECTORS] = {
 		Vec(7.953f, 20.f),																										//MIDI_LCD
 		Vec(7.953f, 62.f),																										//POLYMODE_LCD
 		Vec(coords[POLYMODE_LCD].x + 1.f,		coords[POLYMODE_LCD].y + 11.f),		//POLYMODE_SELECTOR
@@ -1821,7 +1821,7 @@ struct SuperMIDI64Widget : ModuleWidget {
 		yPos = 334.496;
 		///Sustain hold notes switch
 		addParam(createParam<DLXSwitchLed>(Vec(xPos, yPos), module, SuperMIDI64::SUSTHOLD_PARAM));
-		addChild(createLight<TranspOffRedLight>(Vec(xPos, yPos), module, SuperMIDI64::SUSTHOLD_LIGHT));
+		if (module) addChild(createLight<TranspOffRedLight>(Vec(xPos, yPos), module, SuperMIDI64::SUSTHOLD_LIGHT));
 		xPos = (221.264 + 4.178);
 		//Retrig
 		addParam(createParam<DLXSwitchLed>(Vec(xPos, yPos), module, SuperMIDI64::RETRIG_PARAM));
@@ -1830,6 +1830,8 @@ struct SuperMIDI64Widget : ModuleWidget {
 		xPos = (264.402f + 4.178);
 		addOutput(createOutput<DLXPortG>(Vec(xPos, yPos), module, SuperMIDI64::PBEND_OUTPUT));
 		// CC's x 20
+		xPos = 10.5f;
+		yPos = 163.987f;
 		for ( int r = 0; r < 5; r++){
 			for ( int i = 0; i < 4; i++){
 				if (module){
@@ -1838,8 +1840,8 @@ struct SuperMIDI64Widget : ModuleWidget {
 					MccDisplay->displayID = dispID ++;
 					MccDisplay->module = module;
 					addChild(MccDisplay);
-					addOutput(createOutput<DLXPortG>(Vec(module->coords[SuperMIDI64::CC_LCD + i + 4*r].x + 3.5f, module->coords[SuperMIDI64::CC_LCD + i + 4*r].y + 13.f),  module, SuperMIDI64::MM_OUTPUT + i + 4 * r));
-				}	
+				}
+				addOutput(createOutput<DLXPortG>(Vec(xPos + i*33.f + 3.5f, yPos + r*40.f + 13.f),  module, SuperMIDI64::MM_OUTPUT + i + r * 4));
 			}
 		}
 	}
