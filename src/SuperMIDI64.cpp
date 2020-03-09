@@ -165,10 +165,10 @@ struct SuperMIDI64 : Module {
 	bool pedal = false;
 	int rotateIndex = 0;
 	int stealIndex = 0;
-	int numVo = 8;
 	int numVOch = 1;
 	int numVOout = 1;
 	int numVOper = 16;
+	int numVo = numVOout * numVOper;
 	int pbMainDwn = -12;
 	int pbMainUp = 12;
 	int pbMPE = 96;
@@ -435,7 +435,7 @@ struct SuperMIDI64 : Module {
 		midiCCs[17] = 81;
 		midiCCs[18] = 82;
 		midiCCs[19] = 83;
-		numVOper = 8;
+		numVOper = 16;
 		if (numVOout != 1) {  //When resetting from a state with more than 1 active output, reset the channels of the extra outputs then output count to 1
 				for (int i = numVOout; i > 1; i--) {
 					outputs[X_OUTPUT+ i- 1].setChannels(0);
