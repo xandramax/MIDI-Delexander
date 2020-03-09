@@ -508,33 +508,38 @@ struct SuperMIDI64 : Module {
 				break;
 			case NOTE_RANGE_SELECTOR:{
 				noteMin = note;
-				if (noteMax < note) noteMax = note;
 				learnNote = -1;
 				cursorIx = -1;
 				}break;
 			case NOTE_RANGE_SELECTOR + 1:{
 				noteMax = note;
-				if (noteMin > note) noteMin = note;
 				learnNote = -1;
 				cursorIx = -1;
 			}break;
 			case VEL_RANGE_SELECTOR:{
 				velMin = vel;
-				if (velMax < vel) velMax = vel;
 				learnNote = -1;
 				cursorIx = -1;
 			}break;
 			case VEL_RANGE_SELECTOR + 1:{
 				velMax = vel;
-				if (velMin > vel) velMin = vel;
 				learnNote = -1;
 				cursorIx = -1;
 			}break;
 		}
-		if (note < noteMin) return; //TODO Implement noteMin > noteMax
-		if (note > noteMax) return;
-		if (vel < velMin) return;	//TODO Implement velMin > velMax
-		if (vel > velMax) return;
+		
+		if (noteMin <= noteMax) {
+			if (note < noteMin) return;
+			if (note > noteMax) return;
+		}
+		else if (note < noteMin && note > noteMax) return;
+
+		if (velMin <= velMax) {
+			if (vel < velMin) return;
+			if (vel > velMax) return;
+		}
+		else if (vel < velMin && vel > velMax) return;
+
 		// Set notes and gates
 		switch (polyModeIx) {
 			case MPE_MODE:
@@ -965,13 +970,13 @@ struct SuperMIDI64 : Module {
 				resetVoices();
 			}break;
 			case NOTE_RANGE_SELECTOR: {
-				if (noteMin < noteMax) noteMin ++;
+				if (noteMin < 127) noteMin ++;
 			}break;
 			case NOTE_RANGE_SELECTOR + 1: {
 				if (noteMax < 127) noteMax ++;
 			}break;
 			case VEL_RANGE_SELECTOR: {
-				if (velMin < velMax) velMin ++;
+				if (velMin < 127) velMin ++;
 			}break;
 			case VEL_RANGE_SELECTOR + 1: {
 				if (velMax < 127) velMax ++;
@@ -1064,13 +1069,13 @@ struct SuperMIDI64 : Module {
 				if (noteMin > 0) noteMin --;
 			}break;
 			case NOTE_RANGE_SELECTOR + 1: {
-				if (noteMax > noteMin) noteMax --;
+				if (noteMax > 0) noteMax --;
 			}break;
 			case VEL_RANGE_SELECTOR: {
 				if (velMin > 1) velMin --;
 			}break;
 			case VEL_RANGE_SELECTOR + 1: {
-				if (velMax > velMin) velMax --;
+				if (velMax > 1) velMax --;
 			}break;
 			case Y_LCD: {
 				if (polyModeIx == MPE_MODE) {
