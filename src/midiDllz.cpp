@@ -217,9 +217,9 @@ void MIDIdisplay::draw(const DrawArgs &args){
 		nvgTextAlign(args.vg, NVG_ALIGN_CENTER);
 		nvgScissor(args.vg, 12.f, 0.f, box.size.x - 24.f, box.size.y);
 		nvgFillColor(args.vg, textColor);
-		nvgText(args.vg, xcenter, 11.5f, mdriver.c_str(), NULL);
-		nvgText(args.vg, xcenter, 24.5f, mdevice.c_str(), NULL);
-		nvgText(args.vg, xcenter, 37.5f, mchannel.c_str(), NULL);
+		nvgText(args.vg, xcenter, 10.25f, mdriver.c_str(), NULL);
+		nvgText(args.vg, xcenter, 23.25f, mdevice.c_str(), NULL);
+		nvgText(args.vg, xcenter, 36.25f, mchannel.c_str(), NULL);
 	}
 }
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -248,30 +248,30 @@ void MIDIscreen::setMidiPort(midi::Port *port,bool *mpeMode,int *mpeChn,int *mid
 	md->searchdev = true;
 	addChild(md);
 
-	DispBttnL *drvBttnL = createWidget<DispBttnL>(Vec(1.f,1.f));
+	DispBttnL *drvBttnL = createWidget<DispBttnL>(Vec(1.f,2.5f));
 	drvBttnL->md = md;
 	addChild(drvBttnL);
 
-	DispBttnL *devBttnL = createWidget<DispBttnL>(Vec(1.f,14.f));
+	DispBttnL *devBttnL = createWidget<DispBttnL>(Vec(1.f,15.5f));
 	devBttnL->id = 1;
 	devBttnL->md = md;
 	addChild(devBttnL);
 
-	DispBttnL *chnBttnL = createWidget<DispBttnL>(Vec(1.f,27.f));
+	DispBttnL *chnBttnL = createWidget<DispBttnL>(Vec(1.f,28.5f));
 	chnBttnL->id = 2;
 	chnBttnL->md = md;
 	addChild(chnBttnL);
 
-	DispBttnR *drvBttnR = createWidget<DispBttnR>(Vec(box.size.x - 11.f,1.f));
+	DispBttnR *drvBttnR = createWidget<DispBttnR>(Vec(box.size.x - 11.f,2.5f));
 	drvBttnR->md = md;
 	addChild(drvBttnR);
 
-	DispBttnR *devBttnR = createWidget<DispBttnR>(Vec(box.size.x - 11.f,14.f));
+	DispBttnR *devBttnR = createWidget<DispBttnR>(Vec(box.size.x - 11.f,15.5f));
 	devBttnR->id = 1;
 	devBttnR->md = md;
 	addChild(devBttnR);
 
-	DispBttnR *chnBttnR = createWidget<DispBttnR>(Vec(box.size.x - 11.f,27.f));
+	DispBttnR *chnBttnR = createWidget<DispBttnR>(Vec(box.size.x - 11.f,28.5f));
 	chnBttnR->id = 2;
 	chnBttnR->md = md;
 	addChild(chnBttnR);

@@ -23,7 +23,7 @@ struct SuperMIDI64 : Module {
 	enum ParamIds {
 		MINUSONE_PARAM,
 		PLUSONE_PARAM,
-		LEARNCCA_PARAM,
+		LEARNCCA_PARAM,  //TODO Remove params
 		LEARNCCB_PARAM,
 		LEARNCCC_PARAM,
 		LEARNCCD_PARAM,
@@ -80,6 +80,7 @@ struct SuperMIDI64 : Module {
 	};
 	int polyModeIx = ROTATE_MODE;
 	/////
+	const float POLYMODE_ROW_HEIGHT = 13.3f;
 	enum LcdSelectorIds {
 		MIDI_LCD,
 		POLYMODE_LCD,
@@ -96,42 +97,42 @@ struct SuperMIDI64 : Module {
 		ENUMS(CC_LCD, 20),
 		NUM_LCDS_SELECTORS
 	};
-	Vec coords[NUM_LCDS_SELECTORS] = {
-		Vec(9.375f, 20.f),																										//MIDI_LCD
-		Vec(9.375f, 62.f),																										//POLYMODE_LCD
-		Vec(coords[POLYMODE_LCD].x + 1.f,		coords[POLYMODE_LCD].y + 11.f),		//POLYMODE_SELECTOR
-		Vec(coords[POLYMODE_LCD].x + 1.f,		coords[POLYMODE_LCD].y + 24.f),		//VOICES_SELECTOR
-		Vec(coords[POLYMODE_LCD].x + 67.f, 	coords[POLYMODE_LCD].y + 24.f),		//OUTS_SELECTOR
-		Vec(coords[POLYMODE_LCD].x + 19.f, 	coords[POLYMODE_LCD].y + 37.f),		//NOTE_RANGE_SELECTOR 1
-		Vec(coords[POLYMODE_LCD].x + 48.f, 	coords[POLYMODE_LCD].y + 37.f),		//NOTE_RANGE_SELECTOR 2
-		Vec(coords[POLYMODE_LCD].x + 93.f, 	coords[POLYMODE_LCD].y + 37.f),		//VEL_RANGE_SELECTOR 1
-		Vec(coords[POLYMODE_LCD].x + 113.f, coords[POLYMODE_LCD].y + 37.f),		//VEL_RANGE_SELECTOR 2
-		Vec(206.836f +.5f, 67.135f +.5f),		// +.5 to SVG object							//Y_LCD
-		Vec(coords[Y_LCD].x, coords[Y_LCD].y + 43.9f),												//Z_LCD
-		Vec(coords[Y_LCD].x, coords[Y_LCD].y + 117.859),											//RELVEL_LCD
-		Vec(163.387f +.5f, 161.425f +.5f),	// +.5 to SVG object							//TRNSP_LCD
-		Vec(coords[TRNSP_LCD].x + 30.1f, coords[TRNSP_LCD].y),								//PBEND_LCD 1
-		Vec(coords[TRNSP_LCD].x + 55.1f, coords[TRNSP_LCD].y),								//PBEND_LCD 2
-		Vec(12.161f +.5f, 163.477f +.5f),		// +.5 to SVG object							//CC_LCD 1
-		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD].y),										//CC_LCD 2
-		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD].y),										//CC_LCD 3
-		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD].y),										//CC_LCD 4
-		Vec(coords[CC_LCD+0].x,					coords[CC_LCD].y + 40.f),							//CC_LCD 5
-		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD].y + 40.f),							//CC_LCD 6
-		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD].y + 40.f),							//CC_LCD 7
-		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD].y + 40.f),							//CC_LCD 8
-		Vec(coords[CC_LCD+0].x, 				coords[CC_LCD+4].y + 40.f),						//CC_LCD 9
-		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD+4].y + 40.f),						//CC_LCD 10
-		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD+4].y + 40.f),						//CC_LCD 11
-		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD+4].y + 40.f),						//CC_LCD 12
-		Vec(coords[CC_LCD+0].x, 				coords[CC_LCD+8].y + 40.f),						//CC_LCD 13
-		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD+8].y + 40.f),						//CC_LCD 14
-		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD+8].y + 40.f),						//CC_LCD 15
-		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD+8].y + 40.f),						//CC_LCD 16
-		Vec(coords[CC_LCD+0].x, 				coords[CC_LCD+12].y + 40.f),					//CC_LCD 17
-		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD+12].y + 40.f),					//CC_LCD 18
-		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD+12].y + 40.f),					//CC_LCD 19
-		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD+12].y + 40.f),					//CC_LCD 20
+	Vec coords[NUM_LCDS_SELECTORS] = {  //Selector coordinates are relative to LCD
+		Vec(9.375f, 20.f),																																			//MIDI_LCD
+		Vec(9.375f, 62.f),																																			//POLYMODE_LCD
+		Vec(1.f,		coords[POLYMODE_LCD].y),																										//POLYMODE_SELECTOR
+		Vec(1.f,		coords[POLYMODE_LCD].y + POLYMODE_ROW_HEIGHT),															//VOICES_SELECTOR
+		Vec(67.f, 	coords[POLYMODE_LCD].y + POLYMODE_ROW_HEIGHT),															//OUTS_SELECTOR
+		Vec(19.f, 	coords[POLYMODE_LCD].y + POLYMODE_ROW_HEIGHT * 2),													//NOTE_RANGE_SELECTOR 1
+		Vec(48.f, 	coords[POLYMODE_LCD].y + POLYMODE_ROW_HEIGHT * 2),													//NOTE_RANGE_SELECTOR 2
+		Vec(93.f, 	coords[POLYMODE_LCD].y + POLYMODE_ROW_HEIGHT * 2),													//VEL_RANGE_SELECTOR 1
+		Vec(113.f, 	coords[POLYMODE_LCD].y + POLYMODE_ROW_HEIGHT * 2),													//VEL_RANGE_SELECTOR 2
+		Vec(206.836f +.5f, 67.135f +.5f),		// +.5 to SVG object																//Y_LCD
+		Vec(coords[Y_LCD].x, coords[Y_LCD].y + 43.9f),																					//Z_LCD
+		Vec(coords[Y_LCD].x, coords[Y_LCD].y + 117.859),																				//RELVEL_LCD
+		Vec(163.387f +.5f, 161.425f +.5f),	// +.5 to SVG object																//TRNSP_LCD
+		Vec(coords[TRNSP_LCD].x + 30.1f, coords[TRNSP_LCD].y),																	//PBEND_LCD 1
+		Vec(coords[TRNSP_LCD].x + 55.1f, coords[TRNSP_LCD].y),																	//PBEND_LCD 2
+		Vec(12.161f +.5f, 163.477f +.5f),		// +.5 to SVG object																//CC_LCD 1
+		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD].y),																			//CC_LCD 2
+		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD].y),																			//CC_LCD 3
+		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD].y),																			//CC_LCD 4
+		Vec(coords[CC_LCD+0].x,					coords[CC_LCD].y + 40.f),																//CC_LCD 5
+		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD].y + 40.f),																//CC_LCD 6
+		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD].y + 40.f),																//CC_LCD 7
+		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD].y + 40.f),																//CC_LCD 8
+		Vec(coords[CC_LCD+0].x, 				coords[CC_LCD+4].y + 40.f),															//CC_LCD 9
+		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD+4].y + 40.f),															//CC_LCD 10
+		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD+4].y + 40.f),															//CC_LCD 11
+		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD+4].y + 40.f),															//CC_LCD 12
+		Vec(coords[CC_LCD+0].x, 				coords[CC_LCD+8].y + 40.f),															//CC_LCD 13
+		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD+8].y + 40.f),															//CC_LCD 14
+		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD+8].y + 40.f),															//CC_LCD 15
+		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD+8].y + 40.f),															//CC_LCD 16
+		Vec(coords[CC_LCD+0].x, 				coords[CC_LCD+12].y + 40.f),														//CC_LCD 17
+		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD+12].y + 40.f),														//CC_LCD 18
+		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD+12].y + 40.f),														//CC_LCD 19
+		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD+12].y + 40.f),														//CC_LCD 20
 	};
 
 
@@ -182,9 +183,9 @@ struct SuperMIDI64 : Module {
 	int mpeZcc = 128; //128 = ChannelAfterTouch (default MPE Z)
 	int displayYcc = 74;
 	int displayZcc = 128;
-	int learnCC = 0;
-	int learnNote = 0;
-	int cursorIx = 0;
+	int learnCC = -1;
+	int learnNote = -1;
+	int cursorIx = -1;
 	bool MPEmode = false;
 	int const numPolycur = 6;
 	int selectedmidich = 0;
@@ -399,8 +400,8 @@ struct SuperMIDI64 : Module {
 			displayZcc = 129;
 			numVOch = numVo;
 		}
-		learnCC = 0;
-		learnNote = 0;
+		learnCC = -1;
+		learnNote = -1;
 		for (int i=0; i < 20; i++){
 			MCCsFilter[i].lambda = lambdaf;
 			midiCCsVal[i] = 0;
@@ -465,7 +466,7 @@ struct SuperMIDI64 : Module {
 		MPEmasterCh = 0;// 0 ~ 15
 		displayYcc = 74;
 		displayZcc = 128;
-		cursorIx = 0;
+		cursorIx = -1;
 		polyModeIx = ROTATE_MODE;
 	}
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -509,36 +510,36 @@ struct SuperMIDI64 : Module {
 ///////////////////////////////////////////////////////////////////////////////////////
 	void pressNote(uint8_t channel, uint8_t note, uint8_t vel) {
 		switch (learnNote){
-			case 0:
+			case -1:
 				break;
-			case 1:{
+			case NOTE_RANGE_SELECTOR:{
 				noteMin = note;
 				if (noteMax < note) noteMax = note;
-				learnNote = 0;
-				cursorIx = 0;
+				learnNote = -1;
+				cursorIx = -1;
 				}break;
-			case 2:{
+			case NOTE_RANGE_SELECTOR + 1:{
 				noteMax = note;
 				if (noteMin > note) noteMin = note;
-				learnNote = 0;
-				cursorIx = 0;
+				learnNote = -1;
+				cursorIx = -1;
 			}break;
-			case 3:{
+			case VEL_RANGE_SELECTOR:{
 				velMin = vel;
 				if (velMax < vel) velMax = vel;
-				learnNote = 0;
-				cursorIx = 0;
+				learnNote = -1;
+				cursorIx = -1;
 			}break;
-			case 4:{
+			case VEL_RANGE_SELECTOR + 1:{
 				velMax = vel;
 				if (velMin > vel) velMin = vel;
-				learnNote = 0;
-				cursorIx = 0;
+				learnNote = -1;
+				cursorIx = -1;
 			}break;
 		}
-		if (note < noteMin) return;
+		if (note < noteMin) return; //TODO Implement noteMin > noteMax
 		if (note > noteMax) return;
-		if (vel < velMin) return;
+		if (vel < velMin) return;	//TODO Implement velMin > velMax
 		if (vel > velMax) return;
 		// Set notes and gates
 		switch (polyModeIx) {
@@ -836,9 +837,9 @@ struct SuperMIDI64 : Module {
 			} break;
 				// channel aftertouch
 			case 0xd: {
-				if (learnCC > 0) {// learn enabled ???
-					midiCCs[learnCC - 1] = 128;
-					learnCC = 0;
+				if (learnCC > -1) {// learn enabled ???
+					midiCCs[learnCC] = 128;
+					learnCC = -1;
 					return;
 				}////////////////////////////////////////
 				else if (polyModeIx < ROTATE_MODE){
@@ -861,9 +862,9 @@ struct SuperMIDI64 : Module {
 			} break;
 				// pitch Bend
 			case 0xe:{
-				if (learnCC > 0) {// learn enabled ???
-					midiCCs[learnCC - 1] = 128;
-					learnCC = 0;
+				if (learnCC > -1) {// learn enabled ???
+					midiCCs[learnCC] = 128;
+					learnCC = -1;
 					return;
 				}////////////////////////////////////////
 				else if (polyModeIx < ROTATE_MODE){
@@ -883,9 +884,9 @@ struct SuperMIDI64 : Module {
 				if (polyModeIx < ROTATE_MODE){
 					uint8_t channel = msg.getChannel();
 					if (channel == MPEmasterCh){
-						if (learnCC > 0) {///////// LEARN CC MPE master
-							midiCCs[learnCC - 1] = msg.getNote();
-							learnCC = 0;
+						if (learnCC > -1) {///////// LEARN CC MPE master
+							midiCCs[learnCC] = msg.getNote();
+							learnCC = -1;
 							return;
 						}else processCC(msg);
 					}else if (polyModeIx == MPEPLUS_MODE){ //Continuum
@@ -901,9 +902,9 @@ struct SuperMIDI64 : Module {
 					}else if (msg.getNote() == mpeZcc){
 						mpez[channel] = msg.getValue() * 128;
 					}
-				}else if (learnCC > 0) {///////// LEARN CC Poly
-					midiCCs[learnCC - 1] = msg.getNote();
-					learnCC = 0;
+				}else if (learnCC > -1) {///////// LEARN CC Poly
+					midiCCs[learnCC] = msg.getNote();
+					learnCC = -1;
 					return;
 				}else processCC(msg);
 				midiActivity = msg.getValue();
@@ -929,9 +930,9 @@ struct SuperMIDI64 : Module {
 ///////////////////////////////////////////////////////////////////////////////////////
 	void dataPlus(){
 		switch (cursorIx){
-			case 0: {
+			case -1: {
 			}break;
-			case 1: {
+			case POLYMODE_SELECTOR: {
 				if (numVo == 1) {
 					switch (polyModeIx){
 						case MPEPLUS_MODE:
@@ -951,7 +952,7 @@ struct SuperMIDI64 : Module {
 				MPEmode = (polyModeIx < ROTATE_MODE);
 				resetVoices();
 			}break;
-			case 2: {
+			case VOICES_SELECTOR: {
 				if (polyModeIx < ROTATE_MODE) {
 					if (pbMPE < 96) pbMPE ++;
 				} else {
@@ -962,52 +963,52 @@ struct SuperMIDI64 : Module {
 					resetVoices();
 				}
 			}break;
-			case 3: {  //Added incrementable setting for number of active outputs
+			case OUTS_SELECTOR: {  //Added incrementable setting for number of active outputs
 				if (numVOout < 4) {
 					numVOout ++;
 					numVo = numVOout * numVOper;
 				}
 				resetVoices();
 			}break;
-			case 4: {
+			case NOTE_RANGE_SELECTOR: {
 				if (noteMin < noteMax) noteMin ++;
 			}break;
-			case 5: {
+			case NOTE_RANGE_SELECTOR + 1: {
 				if (noteMax < 127) noteMax ++;
 			}break;
-			case 6: {
+			case VEL_RANGE_SELECTOR: {
 				if (velMin < velMax) velMin ++;
 			}break;
-			case 7: {
+			case VEL_RANGE_SELECTOR + 1: {
 				if (velMax < 127) velMax ++;
 			}break;
-			case 8: {
+			case Y_LCD: {
 				if (polyModeIx == MPE_MODE) {
 					if (mpeYcc <128) mpeYcc ++;
 					displayYcc = mpeYcc;
 				}else if (driftcents < 99) driftcents ++;
 			}break;
-			case 9: {
+			case Z_LCD: {
 				if (mpeZcc < 128) mpeZcc ++;
 				else mpeZcc = 0;
 				displayZcc = mpeZcc;
 			}break;
-			case 10: {
+			case RELVEL_LCD: {
 				mpePbOut = !mpePbOut ;
 			}break;
-			case 11: {
+			case TRNSP_LCD: {
 				if (trnsps < 48) trnsps ++;
 			}break;
-			case 12: {
-				if (pbMainDwn < 96) pbMainDwn ++;
+			case PBEND_LCD: {
+				if (pbMainDwn < 0) pbMainDwn ++;
 			}break;
-			case 13: {
+			case PBEND_LCD + 1: {
 				if (pbMainUp < 96) pbMainUp ++;
 			}break;
 			default: {
-				if (midiCCs[cursorIx - numPolycur - 19] < 128)  //20 total CCs
-					midiCCs[cursorIx - numPolycur - 19]  ++;
-				else midiCCs[cursorIx - numPolycur - 19] = 0;
+				if (midiCCs[cursorIx - 15] < 128)  //CC_LCD == 15
+					midiCCs[cursorIx - 15]  ++;
+				else midiCCs[cursorIx - 15] = 0;
 			}break;
 		}
 		autoFocusOff = 10 * APP->engine->getSampleRate();
@@ -1016,9 +1017,9 @@ struct SuperMIDI64 : Module {
 ///////////////////////////////////////////////////////////////////////////////////////
 	void dataMinus(){
 		switch (cursorIx){
-			case 0: {
+			case -1: {
 			}break;
-			case 1: {
+			case POLYMODE_SELECTOR: {
 				if (numVo == 1) {
 					switch (polyModeIx){
 						case MPE_MODE:
@@ -1038,7 +1039,7 @@ struct SuperMIDI64 : Module {
 				MPEmode = (polyModeIx < ROTATE_MODE);
 				resetVoices();
 			}break;
-			case 2: {
+			case VOICES_SELECTOR: {
 				if (polyModeIx < ROTATE_MODE) {
 					if (pbMPE > 0) pbMPE --;
 				} else {
@@ -1050,7 +1051,7 @@ struct SuperMIDI64 : Module {
 					resetVoices();
 				}
 			}break;
-			case 3: {
+			case OUTS_SELECTOR: {
 				if (numVOout > 1) {  //Added decrementable setting for number of active outputs
 					numVOout --;
 					numVo = numVOper * numVOout;
@@ -1065,45 +1066,45 @@ struct SuperMIDI64 : Module {
 				}
 				resetVoices();
 			}break;
-			case 4: {
+			case NOTE_RANGE_SELECTOR: {
 				if (noteMin > 0) noteMin --;
 			}break;
-			case 5: {
+			case NOTE_RANGE_SELECTOR + 1: {
 				if (noteMax > noteMin) noteMax --;
 			}break;
-			case 6: {
+			case VEL_RANGE_SELECTOR: {
 				if (velMin > 1) velMin --;
 			}break;
-			case 7: {
+			case VEL_RANGE_SELECTOR + 1: {
 				if (velMax > velMin) velMax --;
 			}break;
-			case 8: {
+			case Y_LCD: {
 				if (polyModeIx == MPE_MODE) {
 					if (mpeYcc > 0) mpeYcc --;
 					displayYcc = mpeYcc;
 				}else if (driftcents > 0) driftcents --;
 			}break;
-			case 9: {
+			case Z_LCD: {
 				if (mpeZcc > 0) mpeZcc --;
 				else mpeZcc = 128;
 				displayZcc = mpeZcc;
 			}break;
-			case 10: {
+			case RELVEL_LCD: {
 				mpePbOut = !mpePbOut ;
 			}break;
-			case 11: {
+			case TRNSP_LCD: {
 				if (trnsps > -48) trnsps --;
 			}break;
-			case 12: {
+			case PBEND_LCD: {
 				if (pbMainDwn > -96) pbMainDwn --;
 			}break;
-			case 13: {
-				if (pbMainUp > -96) pbMainUp --;
+			case PBEND_LCD + 1: {
+				if (pbMainUp > 0) pbMainUp --;
 			}break;
 			default: {
-				if (midiCCs[cursorIx - numPolycur - 19] > 0)  //20 total CCs
-					midiCCs[cursorIx - numPolycur - 19] --;
-				else midiCCs[cursorIx - numPolycur - 19] = 128;
+				if (midiCCs[cursorIx - 15] > 0)  //CC_LCD == 15
+					midiCCs[cursorIx - 15] --;
+				else midiCCs[cursorIx - 15] = 128;
 			}break;
 		}
 		autoFocusOff = 10 * APP->engine->getSampleRate();
@@ -1185,22 +1186,22 @@ struct SuperMIDI64 : Module {
 			autoFocusOff --;
 			if (autoFocusOff < 1){
 				autoFocusOff = 0;
-				learnCC = 0;
-				learnNote = 0;
-				cursorIx = 0;
+				learnCC = -1;
+				learnNote = -1;
+				cursorIx = -1;
 			}
 		}
 		//// PANEL KNOB AND BUTTONS
 		dataKnob = params[DATAKNOB_PARAM].getValue();
 		if ( dataKnob > 0.07f){
-			if (learnCC + learnNote > 0) return;
+			if (learnCC + learnNote > -1) return;
 			int knobInterval = static_cast<int>(0.03 * args.sampleRate / dataKnob);
 			if (frameData ++ > knobInterval){
 				frameData = 0;
 				dataPlus();
 			}
 		}else if(dataKnob < -0.07f){
-			if (learnCC + learnNote > 0) return;
+			if (learnCC + learnNote > -1) return;
 			int knobInterval = static_cast<int>(0.03 * args.sampleRate / -dataKnob);
 			if (frameData ++ > knobInterval){
 				frameData = 0;
@@ -1208,12 +1209,12 @@ struct SuperMIDI64 : Module {
 			}
 		}
 		if (MinusOneTrigger.process(params[MINUSONE_PARAM].getValue())) {
-			if (learnCC + learnNote > 0) return;
+			if (learnCC + learnNote > -1) return;
 			dataMinus();
 			return;
 		}
 		if (PlusOneTrigger.process(params[PLUSONE_PARAM].getValue())) {
-			if (learnCC + learnNote > 0) return;
+			if (learnCC + learnNote > -1) return;
 			dataPlus();
 			return;
 		}
@@ -1293,16 +1294,16 @@ struct PolyModeDisplayC : TransparentWidget {
 		gb4f = rgbx;
 		rgblrn =  0x64;
 		switch (cursorIxI){
-			case 0:{
+			case -1: {
 				goto noFocus;
 			}break;
-			case 1:{ // PolyMode
+			case SuperMIDI64::POLYMODE_SELECTOR:{ // PolyMode
 				nvgBeginPath(args.vg);
 				nvgRoundedRect(args.vg, 1.f, 1.f, 134.f, 12.f, 3.f);
 				lrnflash = 0x64;
 				rgbf1 = 0;
 			}break;
-			case 2:{ //numVoicesPerOutput/PB MPE
+			case SuperMIDI64::VOICES_SELECTOR:{ //numVoicesPerOutput/PB MPE
 				nvgBeginPath(args.vg);
 				if (module->polyModeIx < 2) {  //In MPE modes, react as full-width button
 					nvgRoundedRect(args.vg, 1.f, 14.f, 134.f, 12.f, 3.f);
@@ -1312,17 +1313,17 @@ struct PolyModeDisplayC : TransparentWidget {
 				lrnflash = 0x64;
 				rgbf2 = 0;
 			}break;
-			case 3: { //numVoiceOutputs. This case is only reachable in non-MPE modes
+			case SuperMIDI64::OUTS_SELECTOR: { //numVoiceOutputs. This case is only reachable in non-MPE modes
 				nvgBeginPath(args.vg);
 				nvgRoundedRect(args.vg, 67.f, 14.f, 67.f, 12.f, 3.f);
 				lrnflash = 0x64;
 				rgbf3 = 0;
 			}break;
-			case 4:{ //minNote
+			case SuperMIDI64::NOTE_RANGE_SELECTOR:{ //minNote
 				nvgBeginPath(args.vg);
 				nvgRoundedRect(args.vg, 19.f, 28.f, 29.f, 12.f, 3.f);
 				gb1f = 0;
-				if (module->learnNote == 2) {
+				if (module->learnNote == SuperMIDI64::NOTE_RANGE_SELECTOR) {
 					snoteMin = "LRN";
 					if ((lrnflash += 16) > 255) lrnflash = 0;
 					gb1 = 0;
@@ -1331,11 +1332,11 @@ struct PolyModeDisplayC : TransparentWidget {
 					lrnflash = 0x64;
 				}
 			}break;
-			case 5:{ //maxNote
+			case SuperMIDI64::NOTE_RANGE_SELECTOR + 1:{ //maxNote
 				nvgBeginPath(args.vg);
 				nvgRoundedRect(args.vg, 48.f, 28.f, 29.f, 12.f, 3.f);
 				gb2f = 0;
-				if (module->learnNote == 3) {
+				if (module->learnNote == SuperMIDI64::NOTE_RANGE_SELECTOR + 1) {
 					snoteMax = "LRN";
 					if ((lrnflash += 16) > 255) lrnflash = 0;
 					gb2 = 0;
@@ -1344,11 +1345,11 @@ struct PolyModeDisplayC : TransparentWidget {
 					lrnflash = 0x64;
 				}
 			}break;
-			case 6:{ //minVel
+			case SuperMIDI64::VEL_RANGE_SELECTOR:{ //minVel
 				nvgBeginPath(args.vg);
 				nvgRoundedRect(args.vg, 93.f, 28.f, 20.f, 12.f, 3.f);
 				gb3f = 0;
-				if (module->learnNote == 4) {
+				if (module->learnNote == SuperMIDI64::VEL_RANGE_SELECTOR) {
 					svelMin = "LRN";
 					if ((lrnflash += 16) > 255) lrnflash = 0;
 					gb3 = 0;
@@ -1357,11 +1358,11 @@ struct PolyModeDisplayC : TransparentWidget {
 					lrnflash = 0x64;
 				}
 			}break;
-			case 7:{ //maxVel
+			case SuperMIDI64::VEL_RANGE_SELECTOR + 1:{ //maxVel
 				nvgBeginPath(args.vg);
 				nvgRoundedRect(args.vg, 113.f, 28.f, 20.f, 12.f, 3.f);
 				gb4f = 0;
-				if (module->learnNote == 5) {
+				if (module->learnNote == SuperMIDI64::VEL_RANGE_SELECTOR + 1) {
 					svelMax = "LRN";
 					if ((lrnflash += 16) > 255) lrnflash = 0;
 					gb4 = 0;
@@ -1383,58 +1384,73 @@ struct PolyModeDisplayC : TransparentWidget {
 		nvgFontFaceId(args.vg, font->handle);
 		nvgTextAlign(args.vg, NVG_ALIGN_CENTER);
 		nvgFillColor(args.vg, nvgRGB(rgbx, rgbx, rgbf1));
-		nvgTextBox(args.vg, 1.f, 11.0f, 134.f, sMode.c_str(), NULL);
+		nvgTextBox(args.vg, 1.f, 10.5f, 134.f, sMode.c_str(), NULL);
 		if (module->polyModeIx < 2) {  //One button in MPE modes
 			nvgFillColor(args.vg, nvgRGB(rgbx, rgbx, rgbf2));
-			nvgTextBox(args.vg, 1.f, 24.f, 134.f, sVo.c_str(), NULL);
+			nvgTextBox(args.vg, 1.f, 23.5f, 134.f, sVo.c_str(), NULL);
 		}else{  //Two buttons in non-MPE modes
 			nvgFillColor(args.vg, nvgRGB(rgbx, rgbx, rgbf2));
-			nvgTextBox(args.vg, 1.f, 24.f, 67.f, sVo.c_str(), NULL);
+			nvgTextBox(args.vg, 1.f, 23.5f, 67.f, sVo.c_str(), NULL);
 			nvgFillColor(args.vg, nvgRGB(rgbx, rgbx, rgbf3));
-			nvgTextBox(args.vg, 67.f, 24.f, 67.f, sOut.c_str(), NULL);
+			nvgTextBox(args.vg, 67.f, 23.5f, 67.f, sOut.c_str(), NULL);
 		}
 		nvgFillColor(args.vg, nvgRGB(rgbx, gb1 & gb2, gb1f & gb2f));
-		nvgTextBox(args.vg, 1.f, 37.f, 18.f, "nte:", NULL);
+		nvgTextBox(args.vg, 1.f, 36.5f, 18.f, "nte:", NULL);
 		nvgFillColor(args.vg, nvgRGB(rgbx, gb1, gb1f));
-		nvgTextBox(args.vg, 19.f, 37.f, 29.f, snoteMin.c_str(), NULL);
+		nvgTextBox(args.vg, 19.f, 36.5f, 29.f, snoteMin.c_str(), NULL);
 		nvgFillColor(args.vg, nvgRGB(rgbx, gb2, gb2f));
-		nvgTextBox(args.vg, 48.f, 37.f, 29.f, snoteMax.c_str(), NULL);
+		nvgTextBox(args.vg, 48.f, 36.5f, 29.f, snoteMax.c_str(), NULL);
 		nvgFillColor(args.vg, nvgRGB(rgbx, gb3 & gb4, gb3f & gb4f));
-		nvgTextBox(args.vg, 77.f, 37.f, 16.f, "vel:", NULL);
+		nvgTextBox(args.vg, 77.f, 36.5f, 16.f, "vel:", NULL);
 		nvgFillColor(args.vg, nvgRGB(rgbx, gb3, gb3f));
-		nvgTextBox(args.vg, 93.f, 37.f, 20.f, svelMin.c_str(), NULL);
+		nvgTextBox(args.vg, 93.f, 36.5f, 20.f, svelMin.c_str(), NULL);
 		nvgFillColor(args.vg, nvgRGB(rgbx, gb4, gb4f));
-		nvgTextBox(args.vg, 113.f, 37.f, 20.f, svelMax.c_str(), NULL);
+		nvgTextBox(args.vg, 113.f, 36.5f, 20.f, svelMax.c_str(), NULL);
 	}
 	void onButton(const event::Button &e) override {
 		if ((e.button == GLFW_MOUSE_BUTTON_LEFT) && (e.action == GLFW_PRESS)){
-			int i = static_cast<int>(e.pos.y / 13.f) + 1;
-			if (i > 2) {
-				i += static_cast<int>((e.pos.x + 7.953) / 57.f) + 1; //Add 1 to account for two buttons on one row in non-MPE modes (numVOper, numVOout)
+			int i = -1;
+			int row = static_cast<int>(e.pos.y / module->POLYMODE_ROW_HEIGHT);
+			if (row > 1) {
+				if (e.pos.x < 77.f) {		//position of "vel:" text
+					if (e.pos.x > module->coords[SuperMIDI64::NOTE_RANGE_SELECTOR + 1].x) i = SuperMIDI64::NOTE_RANGE_SELECTOR + 1;
+					else if (e.pos.x > module->coords[SuperMIDI64::NOTE_RANGE_SELECTOR].x) i = SuperMIDI64::NOTE_RANGE_SELECTOR;
+				}
+				else if (e.pos.x > module->coords[SuperMIDI64::VEL_RANGE_SELECTOR].x) {
+					if (e.pos.x > module->coords[SuperMIDI64::VEL_RANGE_SELECTOR + 1].x) i = SuperMIDI64::VEL_RANGE_SELECTOR + 1;
+					else i = SuperMIDI64::VEL_RANGE_SELECTOR;
+				}
 				if (module->cursorIx != i){
 					module->cursorIx = i;
-					module->learnNote = i - 2;
+					module->learnNote = i;
 					module->autoFocusOff = 10 * APP->engine->getSampleRate();
-				} else if (module->learnNote == i - 2)	{
-					module->learnNote = 0;
+				} else if (module->learnNote == i)	{
+					module->learnNote = -1;
 					module->autoFocusOff = 10 * APP->engine->getSampleRate();
 				}else {
-					module->learnNote = 0;
-					module->cursorIx = 0;
+					module->learnNote = -1;
+					module->cursorIx = -1;
 					module->autoFocusOff = 0;
 				}
 			} else {
-				module->learnNote = 0;
-				if (module->polyModeIx > 1 && i == 2) i += static_cast<int>(e.pos.x / 67);  //If non-MPE mode, add pos.x to determine whether left half or right half was clicked
+				module->learnNote = -1;
+				if (row == 1) {
+					if (module->polyModeIx > 1) {
+						if (e.pos.x > 67.f) i = SuperMIDI64::OUTS_SELECTOR;
+						else i = SuperMIDI64::VOICES_SELECTOR;
+					}
+					else i = SuperMIDI64::VOICES_SELECTOR;
+				}
+				else i = SuperMIDI64::POLYMODE_SELECTOR;
 				if (module->cursorIx != i)	{
 					module->cursorIx = i;
 					module->autoFocusOff = 10 * APP->engine->getSampleRate();
 				}else {
-					module->cursorIx = 0;
+					module->cursorIx = -1;
 					module->autoFocusOff = 0;
 				}
 			}
-			module->learnCC = 0;
+			module->learnCC = -1;
 		}
 	}
 };
@@ -1446,7 +1462,7 @@ struct MidiccDisplayC : OpaqueWidget {
 	SuperMIDI64 *module;
 	float mdfontSize = 11.f;
 	std::string sDisplay = "";
-	int displayID = 0;
+	int displayID = -1;
 	int ccNumber = -1;
 	int pbDwn = 222;
 	int pbUp = 222;
@@ -1463,11 +1479,10 @@ struct MidiccDisplayC : OpaqueWidget {
 	std::shared_ptr<Font> font;
 	void draw(const DrawArgs &args) override{
 			switch (displayID){
-				case 1:{
+				case 0:{
 					if (module->polyModeIx < SuperMIDI64::ROTATE_MODE) {
 						if ((ccNumber != module->displayYcc) || (polychanged != module->polyModeIx)) {
 							ccNumber = module->displayYcc;
-							//mymode = 0;
 							polychanged = module->polyModeIx;
 							displayedCC();
 						}
@@ -1482,7 +1497,7 @@ struct MidiccDisplayC : OpaqueWidget {
 					}
 					canlearn = false;
 				}break;
-				case 2:{
+				case 1:{
 					if (ccNumber != module->displayZcc) {
 						ccNumber = module->displayZcc;
 						//mymode = 0;
@@ -1491,7 +1506,7 @@ struct MidiccDisplayC : OpaqueWidget {
 					canedit = (module->polyModeIx == SuperMIDI64::MPE_MODE);
 					canlearn = false;
 				}break;
-				case 3:{
+				case 2:{
 					switch (module->polyModeIx) {
 						case SuperMIDI64::MPE_MODE: {
 							if (module->mpePbOut) sDisplay = "chnPB";
@@ -1509,7 +1524,7 @@ struct MidiccDisplayC : OpaqueWidget {
 					}
 					canlearn = false;
 				}break;
-				case 4:{
+				case 3:{
 					if (trnsps != module->trnsps){
 						trnsps = module->trnsps;
 						if (trnsps > 0) sDisplay = "t+" + std::to_string(trnsps);
@@ -1519,7 +1534,7 @@ struct MidiccDisplayC : OpaqueWidget {
 					canedit = true;
 					canlearn = false;
 				}break;
-				case 5:{
+				case 4:{
 					if (pbDwn != module->pbMainDwn){
 						pbDwn = module->pbMainDwn;
 						if (pbDwn > 0) sDisplay = "d+" + std::to_string(pbDwn);
@@ -1528,7 +1543,7 @@ struct MidiccDisplayC : OpaqueWidget {
 					};
 					canlearn = false;
 				}break;
-				case 6:{
+				case 5:{
 					if (pbUp != module->pbMainUp){
 						pbUp = module->pbMainUp;
 						if (pbUp > 0) sDisplay = "u+" + std::to_string(pbUp);
@@ -1538,22 +1553,21 @@ struct MidiccDisplayC : OpaqueWidget {
 					canlearn = false;
 				}break;
 				default:{
-					if (ccNumber !=  module->midiCCs[displayID - 7]) {
-						ccNumber =  module->midiCCs[displayID - 7];
+					if (ccNumber != module->midiCCs[displayID - 6]) {
+						ccNumber = module->midiCCs[displayID - 6];
 						displayedCC();
 					}
 					canlearn = true;
-					if ((mymode==2) && (module->learnCC == 0)) {
+					if ((mymode==2) && (module->learnCC == -1)) {
 						mymode = 0;
 						displayedCC();
 					}
 				}break;
 			}
-			if (focusOn && (displayID != (module->cursorIx - module->numPolycur))){
+			if (focusOn && (displayID != (module->cursorIx - SuperMIDI64::Y_LCD))){
 				focusOn = false;
 				if (mymode == 2) {
 					displayedCC();
-					//module->learnCC = 0;
 				}
 				mymode = 0;
 			}
@@ -1590,23 +1604,23 @@ struct MidiccDisplayC : OpaqueWidget {
 		switch (mymode){
 			case 0:{
 				focusOn = false;
-				module->cursorIx = 0;
-				module->learnCC = 0;
+				module->cursorIx = -1;
+				module->learnCC = -1;
 				module->autoFocusOff = 0;
 			}break;
 			case 1:{
 				if (canlearn) displayedCC();
 				flashFocus = 64;
 				focusOn = true;
-				module->learnCC = 0;
-				module->cursorIx = displayID + module->numPolycur;
+				module->learnCC = -1;
+				module->cursorIx = SuperMIDI64::Y_LCD + displayID;
 				module->autoFocusOff = 10 * APP->engine->getSampleRate();
 			}break;
 			case 2:{
 				sDisplay = "LRN";
 				focusOn = true;
-				module->cursorIx = displayID + module->numPolycur;
-				module->learnCC = displayID - 6;
+				module->cursorIx = SuperMIDI64::Y_LCD + displayID;
+				module->learnCC = displayID;
 				module->autoFocusOff = 10 * APP->engine->getSampleRate();
 			}break;
 		}
@@ -1632,7 +1646,7 @@ struct MidiccDisplayC : OpaqueWidget {
 				sDisplay = "FX 1";
 			}break;
 			case 13 :{
-				sDisplay = "FX 1";
+				sDisplay = "FX 2";
 			}break;
 			case 16 :{
 				sDisplay = "Ctrl 1";
@@ -1701,7 +1715,7 @@ struct MidiccDisplayC : OpaqueWidget {
 				}
 				else mymode --;
 				mymodeAction();
-				module->learnNote = 0;
+				module->learnNote = -1;
 			};
 		}
 	}
@@ -1734,7 +1748,7 @@ struct SuperMIDI64Widget : ModuleWidget {
 		addChild(createWidget<ScrewBlack>(Vec(0, 365)));
 		addChild(createWidget<ScrewBlack>(Vec(285, 365)));
 
-		int dispID = 1;
+		int dispID = 0;
 		if (module) {
 			//MIDI
 			MIDIscreen *dDisplay = createWidget<MIDIscreen>(module->coords[SuperMIDI64::MIDI_LCD]);
