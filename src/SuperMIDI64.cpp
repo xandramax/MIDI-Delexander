@@ -135,7 +135,6 @@ struct SuperMIDI64 : Module {
 		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD+12].y + 40.f),														//CC_LCD 20
 	};
 
-
 	/////
 	struct NoteData {
 		uint8_t velocity = 0;
@@ -171,9 +170,9 @@ struct SuperMIDI64 : Module {
 	int numVOout = 1;
 	int numVOper = 16;
 	int pbMainDwn = -12;
-	int pbMainUp = 2;
+	int pbMainUp = 12;
 	int pbMPE = 96;
-	int driftcents = 0;
+	int driftcents = 10;
 	int noteMin = 0;
 	int noteMax = 127;
 	int velMin = 1;
@@ -187,8 +186,6 @@ struct SuperMIDI64 : Module {
 	int learnNote = -1;
 	int cursorIx = -1;
 	bool MPEmode = false;
-	int const numPolycur = 6;
-	int selectedmidich = 0;
 	bool mpePbOut = true;
 	float dataKnob = 0.f;
 	int frameData = 0;
@@ -467,7 +464,12 @@ struct SuperMIDI64 : Module {
 		displayYcc = 74;
 		displayZcc = 128;
 		cursorIx = -1;
+		learnCC = -1;
+		learnNote = -1;
 		polyModeIx = ROTATE_MODE;
+		MPEmode = false;
+	 	rotateIndex = 0;
+	 	stealIndex = 0;
 	}
 ///////////////////////////////////////////////////////////////////////////////////////
 	int getPolyIndex(int nowIndex) {
