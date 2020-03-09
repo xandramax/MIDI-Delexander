@@ -1788,7 +1788,7 @@ struct SuperMIDI64Widget : ModuleWidget {
 		yPos = 108.624f;
 		addParam(createParam<springDataKnobC>(Vec(xPos, yPos), module, SuperMIDI64::DATAKNOB_PARAM));
 		xPos = 39.606f;
-		yPos = 124.568f;
+		yPos = 124.568f - 3.265f;
 		addParam(createParam<minusButtonB>(Vec(xPos, yPos), module, SuperMIDI64::MINUSONE_PARAM));
 		xPos = 103.148f;
 		yPos = 121.124;
