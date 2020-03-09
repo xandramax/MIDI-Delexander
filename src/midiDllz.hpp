@@ -27,12 +27,12 @@ struct MIDIdisplay : OpaqueWidget {
 	bool i_mpeMode = false;
 	int initpointer0 = 0;
 	int *midiActiv = &initpointer0;
-	
+
 	int initpointer_1 = -1;
 	int *mdriverJ = &initpointer_1;
 	int *mchannelJ = &initpointer_1;
 	int mchannelMem = -1;
-	
+
 	bool *resetMidi = NULL;
 	bool showchannel = true;
 	bool isdevice = false;
@@ -41,9 +41,9 @@ struct MIDIdisplay : OpaqueWidget {
 	std::string mdriver = "initalizing";
 	std::string mdevice = "";
 	std::string mchannel = "";
-	
+
 	int cursorId = 0;
-	float mdfontSize = 12.f;	
+	float mdfontSize = 11.f;	
 	float xcenter = 0.f;
 	int drawframe = 0;
 	std::shared_ptr<Font> font;
@@ -83,4 +83,3 @@ struct MIDIscreen : OpaqueWidget{
 	MIDIdisplay *md;
 	void setMidiPort(midi::Port *port,bool *mpeMode,int *mpeChn,int *midiActiv, int *mdriver, std::string *mdevice, int *mchannel, bool *resetMidi);
 };
-

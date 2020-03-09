@@ -6,7 +6,7 @@
 #include <utility> // std::pair
 #include "midiDllz.hpp"
 
-#define mFONT_FILE asset::plugin(pluginInstance, "res/Gidolinya-Regular.ttf")
+#define mFONT_FILE asset::plugin(pluginInstance, "res/terminal-grotesque.ttf")
 
 using namespace rack;
 

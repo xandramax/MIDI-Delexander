@@ -97,8 +97,8 @@ struct SuperMIDI64 : Module {
 		NUM_LCDS_SELECTORS
 	};
 	Vec coords[NUM_LCDS_SELECTORS] = {
-		Vec(8.875f, 20.f),																										//MIDI_LCD
-		Vec(8.875f, 62.f),																										//POLYMODE_LCD
+		Vec(9.375f, 20.f),																										//MIDI_LCD
+		Vec(9.375f, 62.f),																										//POLYMODE_LCD
 		Vec(coords[POLYMODE_LCD].x + 1.f,		coords[POLYMODE_LCD].y + 11.f),		//POLYMODE_SELECTOR
 		Vec(coords[POLYMODE_LCD].x + 1.f,		coords[POLYMODE_LCD].y + 24.f),		//VOICES_SELECTOR
 		Vec(coords[POLYMODE_LCD].x + 67.f, 	coords[POLYMODE_LCD].y + 24.f),		//OUTS_SELECTOR
@@ -106,13 +106,13 @@ struct SuperMIDI64 : Module {
 		Vec(coords[POLYMODE_LCD].x + 48.f, 	coords[POLYMODE_LCD].y + 37.f),		//NOTE_RANGE_SELECTOR 2
 		Vec(coords[POLYMODE_LCD].x + 93.f, 	coords[POLYMODE_LCD].y + 37.f),		//VEL_RANGE_SELECTOR 1
 		Vec(coords[POLYMODE_LCD].x + 113.f, coords[POLYMODE_LCD].y + 37.f),		//VEL_RANGE_SELECTOR 2
-		Vec(207.336f +.5f, 67.135f +.5f),		// +.5 to SVG components					//Y_LCD
+		Vec(206.836f +.5f, 67.135f +.5f),		// +.5 to SVG object							//Y_LCD
 		Vec(coords[Y_LCD].x, coords[Y_LCD].y + 43.9f),												//Z_LCD
 		Vec(coords[Y_LCD].x, coords[Y_LCD].y + 117.859),											//RELVEL_LCD
-		Vec(163.887f +.5f, 161.425f +.5f),	// +.5 to SVG components					//TRNSP_LCD
+		Vec(163.387f +.5f, 161.425f +.5f),	// +.5 to SVG object							//TRNSP_LCD
 		Vec(coords[TRNSP_LCD].x + 30.1f, coords[TRNSP_LCD].y),								//PBEND_LCD 1
 		Vec(coords[TRNSP_LCD].x + 55.1f, coords[TRNSP_LCD].y),								//PBEND_LCD 2
-		Vec(11.661f +.5f, 163.477f +.5f),		// +.5 to SVG components					//CC_LCD 1
+		Vec(12.161f +.5f, 163.477f +.5f),		// +.5 to SVG object							//CC_LCD 1
 		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD].y),										//CC_LCD 2
 		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD].y),										//CC_LCD 3
 		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD].y),										//CC_LCD 4
@@ -1228,7 +1228,7 @@ struct PolyModeDisplayC : TransparentWidget {
 		font = APP->window->loadFont(mFONT_FILE);
 	}
 	SuperMIDI64 *module;
-	float mdfontSize = 12.f;
+	float mdfontSize = 11.f;
 	std::string sMode = "";
 	std::string sVo = "";
 	std::string sOut = "";  //Added string for number of active outputs
@@ -1444,7 +1444,7 @@ struct MidiccDisplayC : OpaqueWidget {
 	font = APP->window->loadFont(mFONT_FILE);
 	}
 	SuperMIDI64 *module;
-	float mdfontSize = 12.f;
+	float mdfontSize = 11.f;
 	std::string sDisplay = "";
 	int displayID = 0;
 	int ccNumber = -1;
@@ -1784,17 +1784,17 @@ struct SuperMIDI64Widget : ModuleWidget {
 			}
 		}
 		////DATA KNOB + -
-		xPos = 58.697f;
+		xPos = 59.195f;
 		yPos = 108.624f;
 		addParam(createParam<springDataKnobC>(Vec(xPos, yPos), module, SuperMIDI64::DATAKNOB_PARAM));
-		xPos = 39.606f;
+		xPos = 40.104f;
 		yPos = 124.568f - 3.265f;
 		addParam(createParam<minusButtonB>(Vec(xPos, yPos), module, SuperMIDI64::MINUSONE_PARAM));
-		xPos = 103.148f;
+		xPos = 103.646f;
 		yPos = 121.124;
 		addParam(createParam<plusButtonB>(Vec(xPos, yPos), module, SuperMIDI64::PLUSONE_PARAM));
 		// X Outs
-		xPos = 173.640f;
+		xPos = 173.140f;
 		yPos = 41.022f;
 		for (int i = 0; i < 4; i++)
 			addOutput(createOutput<DLXPortPoly>(Vec(xPos + i * 29.201f, yPos),  module, SuperMIDI64::X_OUTPUT + i));
@@ -1819,19 +1819,19 @@ struct SuperMIDI64Widget : ModuleWidget {
 		for (int i = 0; i < 4; i++)
 			addOutput(createOutput<DLXPortPoly>(Vec(xPos + i * 29.192f, yPos),  module, SuperMIDI64::GATE_OUTPUT + i));
 		///Sustain hold notes switch
-		xPos = 212.737f;
+		xPos = 212.237f;
 		yPos = 334.864f;
 		addParam(createParam<DLXSwitchLed>(Vec(xPos, yPos), module, SuperMIDI64::SUSTHOLD_PARAM));
 		if (module) addChild(createLight<TranspOffRedLight>(Vec(xPos, yPos), module, SuperMIDI64::SUSTHOLD_LIGHT));
 		//Retrig
-		xPos = 232.796f;
+		xPos = 232.296f;
 		addParam(createParam<DLXSwitchLed>(Vec(xPos, yPos), module, SuperMIDI64::RETRIG_PARAM));
 		// PBend Out
-		xPos = 273.563f;
+		xPos = 273.063f;
 		yPos = 159.275f;
 		addOutput(createOutput<DLXPortG>(Vec(xPos, yPos), module, SuperMIDI64::PBEND_OUTPUT));
 		// CC's x 20
-		xPos = 18.070f;
+		xPos = 18.570f;
 		yPos = 179.275f;
 		for ( int r = 0; r < 5; r++){
 			for ( int i = 0; i < 4; i++){
