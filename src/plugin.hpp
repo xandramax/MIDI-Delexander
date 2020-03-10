@@ -15,6 +15,7 @@ extern Plugin* pluginInstance;
 
 // Declare each Model, defined in each module source file
 extern Model* modelSuperMIDI64;
+extern Model* modelDuoMIDI_CV;
 
 ///////////////////////
 // custom components
@@ -71,6 +72,13 @@ struct plusButtonB : SvgSwitch {
 struct DLXPortPoly : SvgPort {
 	DLXPortPoly() {
 		setSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/DLXPort16.svg")));
+		shadow->opacity = 0.f;
+	}
+};
+
+struct DLXPortPolyOut : SvgPort {
+	DLXPortPolyOut() {
+		setSvg(APP->window->loadSvg(asset::plugin(pluginInstance, "res/DLXPort16b.svg")));
 		shadow->opacity = 0.f;
 	}
 };

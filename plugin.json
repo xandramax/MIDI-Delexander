@@ -5,11 +5,11 @@
   "license": "GPL-3.0-only",
   "brand": "Delexander",
   "author": "Anthony Lexander Matos",
-  "authorEmail": "",
-  "authorUrl": "",
-  "pluginUrl": "",
+  "authorEmail": "delexander.modules@gmail.com",
+  "authorUrl": "https://soundcloud.com/user-702669010",
+  "pluginUrl": "https://github.com/anlexmatos/MIDI-Delexander",
   "manualUrl": "",
-  "sourceUrl": "",
+  "sourceUrl": "https://github.com/anlexmatos/MIDI-Delexander",
   "donateUrl": "",
   "changelogUrl": "",
   "disabled": false,
@@ -21,9 +21,18 @@
 			"tags": [
 				"MIDI",
 				"External",
-				"Multiple",
 				"Polyphonic"
 			]
-		}
+		},
+    {
+      "slug": "DuoMIDI_CV",
+      "name": "Duo MIDI-CV",
+      "description": "Converts MIDI to CV and gates with rotating MPE mode, and convert triggers to MIDI note-off",
+      "tags": [
+        "External",
+        "MIDI",
+        "Polyphonic"
+      ]
+    }
   ]
 }

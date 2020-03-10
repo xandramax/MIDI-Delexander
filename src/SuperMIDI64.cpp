@@ -527,7 +527,7 @@ struct SuperMIDI64 : Module {
 				cursorIx = -1;
 			}break;
 		}
-		
+
 		if (noteMin <= noteMax) {
 			if (note < noteMin) return;
 			if (note > noteMax) return;
@@ -1742,10 +1742,10 @@ struct SuperMIDI64Widget : ModuleWidget {
 		setModule(module);
 		setPanel(APP->window->loadSvg(asset::plugin(pluginInstance,"res/SuperMIDI64.svg")));
 		//Screws
-		addChild(createWidget<ScrewBlack>(Vec(0, 0)));
-		addChild(createWidget<ScrewBlack>(Vec(285, 0)));
-		addChild(createWidget<ScrewBlack>(Vec(0, 365)));
-		addChild(createWidget<ScrewBlack>(Vec(285, 365)));
+		addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ScrewBlack>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, 0)));
+		addChild(createWidget<ScrewBlack>(Vec(RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
+		addChild(createWidget<ScrewBlack>(Vec(box.size.x - 2 * RACK_GRID_WIDTH, RACK_GRID_HEIGHT - RACK_GRID_WIDTH)));
 
 		int dispID = 0;
 		if (module) {
