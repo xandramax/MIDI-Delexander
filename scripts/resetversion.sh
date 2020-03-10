@@ -6,4 +6,3 @@ echo "Updating to version=$version"
 tf=`mktemp`
 jq --arg VERSION "$version" '.version=$VERSION' plugin.json > $tf
 mv $tf plugin.json
-
