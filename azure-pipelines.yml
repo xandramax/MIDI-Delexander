@@ -133,7 +133,7 @@ jobs:
   - task: GitHubRelease@0
     displayName: "Update Github Release"
     inputs:
-      gitHubConnection: anlexmatos
+      gitHubConnection: anlexmatos/MIDI-Delexander
       repositoryName: anlexmatos/MIDI-Delexander
       action: edit
       tag: Nightly
