@@ -62,7 +62,8 @@ struct DuoMIDI_CV : Module {
 	uint32_t clock = 0;
 	int clockDivision;
 
-	float bendRange = 60.f;
+	float bendRangeUp = 60.f;
+	float bendRangeDown = 60.f;
 
 	bool pedal;
 	// Indexed by channel, indexes 16-31 correspond to secondary output channels
@@ -76,7 +77,7 @@ struct DuoMIDI_CV : Module {
 	int rotateIndex;
 
 	// 32 channels for MPE. When MPE is disabled, only the first channel is used.
-	uint16_t pitches[32];
+	uint16_t bends[32];
 	uint8_t mods[32];
 	dsp::ExponentialFilter pitchFilters[32];
 	dsp::ExponentialFilter modFilters[32];
@@ -105,7 +106,8 @@ struct DuoMIDI_CV : Module {
 		polyMode = ROTATE_MODE;
 		mpeMode = DIRECT_MPE;
 		clockDivision = 24;
-		bendRange = 60.f;
+		bendRangeUp = 60.f;
+		bendRangeDown = 60.f;
 		panic();
 		midiInput.reset();
 	}
@@ -118,7 +120,7 @@ struct DuoMIDI_CV : Module {
 			gates[c] = false;
 			velocities[c] = 0;
 			aftertouches[c] = 0;
-			pitches[c] = 8192;
+			bends[c] = 8192;
 			mods[c] = 0;
 			pitchFilters[c].reset();
 			modFilters[c].reset();
@@ -159,7 +161,7 @@ struct DuoMIDI_CV : Module {
 			if (inputs[NOTESTOP1_INPUT].getVoltage(c) >= 1.f) {
 				velocities[c] = 0;
 				aftertouches[c] = 0;
-				pitches[c] = 8192;
+				bends[c] = 8192;
 				mods[c] = 0;
 				pitchFilters[c].reset();
 				modFilters[c].reset();
@@ -174,7 +176,7 @@ struct DuoMIDI_CV : Module {
 			if (inputs[NOTESTOP2_INPUT].getVoltage(c) >= 1.f) {
 				velocities[16 + c] = 0;
 				aftertouches[16 + c] = 0;
-				pitches[16 + c] = 8192;
+				bends[16 + c] = 8192;
 				mods[16 + c] = 0;
 				pitchFilters[16 + c].reset();
 				modFilters[16 + c].reset();
@@ -192,12 +194,18 @@ struct DuoMIDI_CV : Module {
 			outputs[MOD1_OUTPUT].setChannels(channels1);
 			outputs[MOD2_OUTPUT].setChannels(channels2);
 			for (int c = 0; c < channels1; c++) {
-				outputs[PITCH_BEND1_OUTPUT].setVoltage(pitchFilters[c].process(args.sampleTime, rescale(pitches[c], 0, 1 << 14, -5.f, 5.f)*(bendRange/60.f)), c);
+				if (bends[c] > 8192)
+					outputs[PITCH_BEND1_OUTPUT].setVoltage(pitchFilters[c].process(args.sampleTime, rescale(bends[c], 0, 1 << 14, -5.f, 5.f)*(bendRangeUp/60.f)), c);
+				else
+					outputs[PITCH_BEND1_OUTPUT].setVoltage(pitchFilters[c].process(args.sampleTime, rescale(bends[c], 0, 1 << 14, -5.f, 5.f)*(bendRangeDown/60.f)), c);
 				outputs[BENT_PITCH1_OUTPUT].setVoltage((outputs[PITCH1_OUTPUT].getVoltage(c) + outputs[PITCH_BEND1_OUTPUT].getVoltage(c)), c);
 				outputs[MOD1_OUTPUT].setVoltage(modFilters[c].process(args.sampleTime, rescale(mods[c], 0, 127, 0.f, 10.f)), c);
 			}
 			for (int c = 0; c < channels2; c++) {
-				outputs[PITCH_BEND2_OUTPUT].setVoltage(pitchFilters[16 + c].process(args.sampleTime, rescale(pitches[16 +c ], 0, 1 << 14, -5.f, 5.f)*(bendRange/60.f)), c);
+				if (bends[16 + c] > 8192)
+					outputs[PITCH_BEND2_OUTPUT].setVoltage(pitchFilters[16 + c].process(args.sampleTime, rescale(bends[16 + c], 0, 1 << 14, -5.f, 5.f)*(bendRangeUp/60.f)), c);
+				else
+					outputs[PITCH_BEND2_OUTPUT].setVoltage(pitchFilters[16 + c].process(args.sampleTime, rescale(bends[16 + c], 0, 1 << 14, -5.f, 5.f)*(bendRangeDown/60.f)), c);
 				outputs[BENT_PITCH2_OUTPUT].setVoltage((outputs[PITCH2_OUTPUT].getVoltage(c) + outputs[PITCH_BEND2_OUTPUT].getVoltage(c)), c);
 				outputs[MOD2_OUTPUT].setVoltage(modFilters[16 + c].process(args.sampleTime, rescale(mods[16 + c], 0, 127, 0.f, 10.f)), c);
 			}
@@ -207,7 +215,10 @@ struct DuoMIDI_CV : Module {
 			outputs[PITCH_BEND2_OUTPUT].setChannels(1);
 			outputs[MOD1_OUTPUT].setChannels(1);
 			outputs[MOD2_OUTPUT].setChannels(1);
-			outputs[PITCH_BEND1_OUTPUT].setVoltage(pitchFilters[0].process(args.sampleTime, rescale(pitches[0], 0, 1 << 14, -5.f, 5.f)*(bendRange/60.f)));
+			if (bends[0] > 8192)
+				outputs[PITCH_BEND1_OUTPUT].setVoltage(pitchFilters[0].process(args.sampleTime, rescale(bends[0], 0, 1 << 14, -5.f, 5.f)*(bendRangeUp/60.f)));
+			else
+				outputs[PITCH_BEND1_OUTPUT].setVoltage(pitchFilters[0].process(args.sampleTime, rescale(bends[0], 0, 1 << 14, -5.f, 5.f)*(bendRangeDown/60.f)));
 			outputs[PITCH_BEND2_OUTPUT].setVoltage(outputs[PITCH_BEND1_OUTPUT].getVoltage());
 			outputs[MOD1_OUTPUT].setVoltage(modFilters[0].process(args.sampleTime, rescale(mods[0], 0, 127, 0.f, 10.f)));
 			outputs[MOD2_OUTPUT].setVoltage(outputs[MOD1_OUTPUT].getVoltage());
@@ -283,7 +294,7 @@ struct DuoMIDI_CV : Module {
 					else
 						c = assignedChannels[msg.getChannel()];
 				}
-				pitches[c] = ((uint16_t) msg.getValue() << 7) | msg.getNote();
+				bends[c] = ((uint16_t) msg.getValue() << 7) | msg.getNote();
 			} break;
 			case 0xf: {
 				processSystem(msg);
@@ -603,7 +614,7 @@ struct DuoMIDI_CV : Module {
 		json_object_set_new(rootJ, "clockDivision", json_integer(clockDivision));
 		// Saving/restoring pitch and mod doesn't make much sense for MPE.
 		if (polyMode != MPE_MODE) {
-			json_object_set_new(rootJ, "lastPitch", json_integer(pitches[0]));
+			json_object_set_new(rootJ, "lastBend", json_integer(bends[0]));
 			json_object_set_new(rootJ, "lastMod", json_integer(mods[0]));
 		}
 		json_object_set_new(rootJ, "midi", midiInput.toJson());
@@ -631,9 +642,9 @@ struct DuoMIDI_CV : Module {
 		if (clockDivisionJ)
 			clockDivision = json_integer_value(clockDivisionJ);
 
-		json_t* lastPitchJ = json_object_get(rootJ, "lastPitch");
-		if (lastPitchJ)
-			pitches[0] = json_integer_value(lastPitchJ);
+		json_t* lastBendJ = json_object_get(rootJ, "lastBend");
+		if (lastBendJ)
+			bends[0] = json_integer_value(lastBendJ);
 
 		json_t* lastModJ = json_object_get(rootJ, "lastMod");
 		if (lastModJ)
@@ -674,26 +685,53 @@ struct ClockDivisionItem : MenuItem {
 };
 
 
-struct BendRangeValueItem : MenuItem {
+struct BendRangeUpValueItem : MenuItem {
 	DuoMIDI_CV* module;
-	int bendRange;
+	int bendRangeUp;
 	void onAction(const event::Action& e) override {
-		module->bendRange = bendRange;
+		module->bendRangeUp = bendRangeUp;
 	}
 };
 
 
-struct BendRangeItem : MenuItem {
+struct BendRangeUpItem : MenuItem {
 	DuoMIDI_CV* module;
 	Menu* createChildMenu() override {
 		Menu* menu = new Menu;
-		std::vector<float> ranges = {2.f, 7.f, 12.f, 24.f, 36.f, 48.f, 60.f, 72.f, 84.f, 96.f};
+		std::vector<float> ranges = {2.f, 5.f, 7.f, 12.f, 24.f, 36.f, 48.f, 60.f, 72.f, 84.f, 96.f};
 		for (size_t i = 0; i < ranges.size(); i++) {
-			BendRangeValueItem* item = new BendRangeValueItem;
-			item->text = string::f("+/- %d", static_cast<int>(ranges[i]));
-			item->rightText = CHECKMARK(module->bendRange == ranges[i]);
+			BendRangeUpValueItem* item = new BendRangeUpValueItem;
+			item->text = string::f("+ %d", static_cast<int>(ranges[i]));
+			item->rightText = CHECKMARK(module->bendRangeUp == ranges[i]);
 			item->module = module;
-			item->bendRange = ranges[i];
+			item->bendRangeUp = ranges[i];
+			menu->addChild(item);
+		}
+		return menu;
+	}
+};
+
+
+struct BendRangeDownValueItem : MenuItem {
+	DuoMIDI_CV* module;
+	int bendRangeDown;
+	void onAction(const event::Action& e) override {
+		module->bendRangeDown = bendRangeDown;
+	}
+};
+
+
+struct BendRangeDownItem : MenuItem {
+	DuoMIDI_CV* module;
+	Menu* createChildMenu() override {
+		Menu* menu = new Menu;
+		std::vector<float> ranges = {2.f, 5.f, 7.f, 12.f, 24.f, 36.f, 48.f, 60.f, 72.f, 84.f, 96.f};
+		for (size_t i = 0; i < ranges.size(); i++) {
+			BendRangeDownValueItem* item = new BendRangeDownValueItem;
+			item->text = string::f("- %d", static_cast<int>(ranges[i]));
+			item->rightText = CHECKMARK(module->bendRangeDown == ranges[i]);
+			item->module = module;
+			item->bendRangeDown = ranges[i];
 			menu->addChild(item);
 		}
 		return menu;
@@ -883,11 +921,17 @@ struct DuoMIDI_CVWidget : ModuleWidget {
 		clockDivisionItem->module = module;
 		menu->addChild(clockDivisionItem);
 
-		BendRangeItem* bendRangeItem = new BendRangeItem;
-		bendRangeItem->text = "Bend range";
-		bendRangeItem->rightText = RIGHT_ARROW;
-		bendRangeItem->module = module;
-		menu->addChild(bendRangeItem);
+		BendRangeUpItem* bendRangeUpItem = new BendRangeUpItem;
+		bendRangeUpItem->text = "Pitch bend up range";
+		bendRangeUpItem->rightText = RIGHT_ARROW;
+		bendRangeUpItem->module = module;
+		menu->addChild(bendRangeUpItem);
+
+		BendRangeDownItem* bendRangeDownItem = new BendRangeDownItem;
+		bendRangeDownItem->text = "Pitch bend down range";
+		bendRangeDownItem->rightText = RIGHT_ARROW;
+		bendRangeDownItem->module = module;
+		menu->addChild(bendRangeDownItem);
 
 		Channel1Item* channel1Item = new Channel1Item;
 		channel1Item->text = "Output 1 Polyphony channels";
