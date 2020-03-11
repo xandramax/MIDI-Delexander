@@ -148,7 +148,7 @@ struct SuperMIDI64 : Module {
 	int16_t mPBnd = 0;
 	uint8_t midiCCsVal[20] = {0};
 
-	int midiCCs[20] = {128,1,2,7,10,11,12,13,64,70,71,74,16,17,18,19,80,81,82,83};
+	int midiCCs[20] = {128,1,4,7,10,11,12,13,64,70,71,74,16,17,18,19,80,81,82,83};
 	bool gates[64] = {false};
 
 	float xpitch[16] = {0.f};
@@ -409,7 +409,7 @@ struct SuperMIDI64 : Module {
 		//default midi CCs
 		midiCCs[0] = 128;
 		midiCCs[1] = 1;
-		midiCCs[2] = 2;
+		midiCCs[2] = 4;
 		midiCCs[3] = 7;
 		midiCCs[4] = 10;
 		midiCCs[5] = 11;
@@ -1619,7 +1619,7 @@ struct MidiccDisplayC : OpaqueWidget {
 				sDisplay = "LRN";
 				focusOn = true;
 				module->cursorIx = SuperMIDI64::Y_LCD + displayID;
-				module->learnCC = displayID;
+				module->learnCC = displayID - 6;
 				module->autoFocusOff = 10 * APP->engine->getSampleRate();
 			}break;
 		}
@@ -1632,8 +1632,14 @@ struct MidiccDisplayC : OpaqueWidget {
 			case 2 :{
 				sDisplay = "BrC";
 			}break;
+			case 4 :{
+				sDisplay = "Foot";
+			}break;
 			case 7 :{
 				sDisplay = "Vol";
+			}break;
+			case 8 :{
+				sDisplay = "Bal";
 			}break;
 			case 10 :{
 				sDisplay = "Pan";
@@ -1662,11 +1668,29 @@ struct MidiccDisplayC : OpaqueWidget {
 			case 64 :{
 				sDisplay = "Sust";
 			}break;
+			case 66 :{
+				sDisplay = "Sost";
+			}break;
+			case 67 :{
+				sDisplay = "Soft";
+			}break;
+			case 68 :{
+				sDisplay = "Lgto";
+			}break;
+			case 69 :{
+				sDisplay = "Hold";
+			}break;
 			case 70 :{
 				sDisplay = "Vari";
 			}break;
 			case 71 :{
 				sDisplay = "Tmbr";
+			}break;
+			case 72 :{
+				sDisplay = "Rel";
+			}break;
+			case 73 :{
+				sDisplay = "Atk";
 			}break;
 			case 74 :{
 				sDisplay = "Brite";
