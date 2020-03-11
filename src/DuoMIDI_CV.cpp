@@ -192,13 +192,12 @@ struct DuoMIDI_CV : Module {
 			outputs[MOD1_OUTPUT].setChannels(channels1);
 			outputs[MOD2_OUTPUT].setChannels(channels2);
 			for (int c = 0; c < channels1; c++) {
-				// -8 to +8 voltage scale = 96-note pitchbend range
 				outputs[PITCH_BEND1_OUTPUT].setVoltage(pitchFilters[c].process(args.sampleTime, rescale(pitches[c], 0, 1 << 14, -5.f, 5.f)*(bendRange/60)), c);
 				outputs[BENT_PITCH1_OUTPUT].setVoltage((outputs[PITCH1_OUTPUT].getVoltage(c) + outputs[PITCH_BEND1_OUTPUT].getVoltage(c)), c);
 				outputs[MOD1_OUTPUT].setVoltage(modFilters[c].process(args.sampleTime, rescale(mods[c], 0, 127, 0.f, 10.f)), c);
 			}
 			for (int c = 0; c < channels2; c++) {
-				outputs[PITCH_BEND2_OUTPUT].setVoltage(pitchFilters[16 + c].process(args.sampleTime, rescale(pitches[16 +c ], 0, 1 << 14, -8.f, 8.f)), c);
+				outputs[PITCH_BEND2_OUTPUT].setVoltage(pitchFilters[16 + c].process(args.sampleTime, rescale(pitches[16 +c ], 0, 1 << 14, -5.f, 5.f)*(bendRange/60)), c);
 				outputs[BENT_PITCH2_OUTPUT].setVoltage((outputs[PITCH2_OUTPUT].getVoltage(c) + outputs[PITCH_BEND2_OUTPUT].getVoltage(c)), c);
 				outputs[MOD2_OUTPUT].setVoltage(modFilters[16 + c].process(args.sampleTime, rescale(mods[16 + c], 0, 127, 0.f, 10.f)), c);
 			}
@@ -208,7 +207,7 @@ struct DuoMIDI_CV : Module {
 			outputs[PITCH_BEND2_OUTPUT].setChannels(1);
 			outputs[MOD1_OUTPUT].setChannels(1);
 			outputs[MOD2_OUTPUT].setChannels(1);
-			outputs[PITCH_BEND1_OUTPUT].setVoltage(pitchFilters[0].process(args.sampleTime, rescale(pitches[0], 0, 1 << 14, -8.f, 8.f)));
+			outputs[PITCH_BEND1_OUTPUT].setVoltage(pitchFilters[0].process(args.sampleTime, rescale(pitches[0], 0, 1 << 14, -5.f, 5.f)*(bendRange/60)));
 			outputs[PITCH_BEND2_OUTPUT].setVoltage(outputs[PITCH_BEND1_OUTPUT].getVoltage());
 			outputs[MOD1_OUTPUT].setVoltage(modFilters[0].process(args.sampleTime, rescale(mods[0], 0, 127, 0.f, 10.f)));
 			outputs[MOD2_OUTPUT].setVoltage(outputs[MOD1_OUTPUT].getVoltage());
@@ -542,13 +541,24 @@ struct DuoMIDI_CV : Module {
 		}
 		// Clear notes that are not held if polyphonic
 		else {
-			for (int c = 0; c < (16 + channels2); c++) {
+			for (int c = 0; c < channels1; c++) {
 				if (!gates[c])
 					continue;
 				gates[c] = false;
 				for (uint8_t note : heldNotes) {
 					if (notes[c] == note) {
 						gates[c] = true;
+						break;
+					}
+				}
+			}
+			for (int c = 0; c < channels2; c++) {
+				if (!gates[16 + c])
+					continue;
+				gates[16 + c] = false;
+				for (uint8_t note : heldNotes) {
+					if (notes[16 + c] == note) {
+						gates[16 + c] = true;
 						break;
 					}
 				}
