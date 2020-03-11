@@ -62,7 +62,7 @@ struct DuoMIDI_CV : Module {
 	uint32_t clock = 0;
 	int clockDivision;
 
-	int bendRange = 60;
+	float bendRange = 60.f;
 
 	bool pedal;
 	// Indexed by channel, indexes 16-31 correspond to secondary output channels
@@ -105,7 +105,7 @@ struct DuoMIDI_CV : Module {
 		polyMode = ROTATE_MODE;
 		mpeMode = DIRECT_MPE;
 		clockDivision = 24;
-		bendRange = 60;
+		bendRange = 60.f;
 		panic();
 		midiInput.reset();
 	}
@@ -192,12 +192,12 @@ struct DuoMIDI_CV : Module {
 			outputs[MOD1_OUTPUT].setChannels(channels1);
 			outputs[MOD2_OUTPUT].setChannels(channels2);
 			for (int c = 0; c < channels1; c++) {
-				outputs[PITCH_BEND1_OUTPUT].setVoltage(pitchFilters[c].process(args.sampleTime, rescale(pitches[c], 0, 1 << 14, -5.f, 5.f)*(bendRange/60)), c);
+				outputs[PITCH_BEND1_OUTPUT].setVoltage(pitchFilters[c].process(args.sampleTime, rescale(pitches[c], 0, 1 << 14, -5.f, 5.f)*(bendRange/60.f)), c);
 				outputs[BENT_PITCH1_OUTPUT].setVoltage((outputs[PITCH1_OUTPUT].getVoltage(c) + outputs[PITCH_BEND1_OUTPUT].getVoltage(c)), c);
 				outputs[MOD1_OUTPUT].setVoltage(modFilters[c].process(args.sampleTime, rescale(mods[c], 0, 127, 0.f, 10.f)), c);
 			}
 			for (int c = 0; c < channels2; c++) {
-				outputs[PITCH_BEND2_OUTPUT].setVoltage(pitchFilters[16 + c].process(args.sampleTime, rescale(pitches[16 +c ], 0, 1 << 14, -5.f, 5.f)*(bendRange/60)), c);
+				outputs[PITCH_BEND2_OUTPUT].setVoltage(pitchFilters[16 + c].process(args.sampleTime, rescale(pitches[16 +c ], 0, 1 << 14, -5.f, 5.f)*(bendRange/60.f)), c);
 				outputs[BENT_PITCH2_OUTPUT].setVoltage((outputs[PITCH2_OUTPUT].getVoltage(c) + outputs[PITCH_BEND2_OUTPUT].getVoltage(c)), c);
 				outputs[MOD2_OUTPUT].setVoltage(modFilters[16 + c].process(args.sampleTime, rescale(mods[16 + c], 0, 127, 0.f, 10.f)), c);
 			}
@@ -207,7 +207,7 @@ struct DuoMIDI_CV : Module {
 			outputs[PITCH_BEND2_OUTPUT].setChannels(1);
 			outputs[MOD1_OUTPUT].setChannels(1);
 			outputs[MOD2_OUTPUT].setChannels(1);
-			outputs[PITCH_BEND1_OUTPUT].setVoltage(pitchFilters[0].process(args.sampleTime, rescale(pitches[0], 0, 1 << 14, -5.f, 5.f)*(bendRange/60)));
+			outputs[PITCH_BEND1_OUTPUT].setVoltage(pitchFilters[0].process(args.sampleTime, rescale(pitches[0], 0, 1 << 14, -5.f, 5.f)*(bendRange/60.f)));
 			outputs[PITCH_BEND2_OUTPUT].setVoltage(outputs[PITCH_BEND1_OUTPUT].getVoltage());
 			outputs[MOD1_OUTPUT].setVoltage(modFilters[0].process(args.sampleTime, rescale(mods[0], 0, 127, 0.f, 10.f)));
 			outputs[MOD2_OUTPUT].setVoltage(outputs[MOD1_OUTPUT].getVoltage());
@@ -687,10 +687,10 @@ struct BendRangeItem : MenuItem {
 	DuoMIDI_CV* module;
 	Menu* createChildMenu() override {
 		Menu* menu = new Menu;
-		std::vector<int> ranges = {2, 7, 12, 24, 36, 48, 60, 72, 84, 96};
+		std::vector<float> ranges = {2.f, 7.f, 12.f, 24.f, 36.f, 48.f, 60.f, 72.f, 84.f, 96.f};
 		for (size_t i = 0; i < ranges.size(); i++) {
 			BendRangeValueItem* item = new BendRangeValueItem;
-			item->text = string::f("+/- %d", ranges[i]);
+			item->text = string::f("+/- %d", static_cast<int>(ranges[i]));
 			item->rightText = CHECKMARK(module->bendRange == ranges[i]);
 			item->module = module;
 			item->bendRange = ranges[i];
