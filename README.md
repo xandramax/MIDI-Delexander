@@ -1,4 +1,4 @@
-# MIDI-Delexander
+# MIDI Delexander
 A plugin for VCV Rack containing modules with a focus on MIDI
 
 ![MIDI-Delexander](https://github.com/anlexmatos/MIDI-Delexander/blob/master/MIDI-Delexander.PNG)
@@ -6,6 +6,7 @@ A plugin for VCV Rack containing modules with a focus on MIDI
 # Duo MIDI-CV
 Based on MIDI-CV from VCV Rack Core modules
 * MIDI pitch bend range is configurable via context menu
+* Bend range up and down can be set separately
 * Adds a Bent Pitch output which carries a sum of pitch bend and note data
 * Allows for Rotate, Reuse, and Reset modes to be used with MPE
 * Adds a secondary output for all note-related MIDI data, allowing for polyphony up to 32
