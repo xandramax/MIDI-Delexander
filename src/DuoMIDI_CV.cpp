@@ -988,7 +988,10 @@ struct DuoMIDI_CVWidget : ModuleWidget {
 
 		BendRangesItem* bendRangesItem = new BendRangesItem;
 		bendRangesItem->text = "Pitch bend range";
-		bendRangesItem->rightText = string::f("%.0f", module->bendRangeUp) + "/" + string::f("%.0f", module->bendRangeDown) + " " + RIGHT_ARROW;
+		if (module->bendRangeDown == module->bendRangeUp)
+			bendRangesItem->rightText = "+/-" + string::f("%.0f", module->bendRangeUp) + " " + RIGHT_ARROW;
+		else
+			bendRangesItem->rightText = "+" + string::f("%.0f", module->bendRangeUp) + "/-" + string::f("%.0f", module->bendRangeDown) + " " + RIGHT_ARROW;
 		bendRangesItem->module = module;
 		menu->addChild(bendRangesItem);
 
