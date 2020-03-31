@@ -59,6 +59,8 @@ struct DuoMIDI_CV : Module {
 	};
 	MPEMode mpeMode;
 
+	bool useLastNoteModulation = false;
+
 	uint32_t clock = 0;
 	int clockDivision;
 
@@ -81,6 +83,9 @@ struct DuoMIDI_CV : Module {
 	uint8_t mods[32];
 	dsp::ExponentialFilter pitchFilters[32];
 	dsp::ExponentialFilter modFilters[32];
+
+	uint16_t lastBend;
+	uint8_t lastMod;
 
 	dsp::PulseGenerator clockPulse;
 	dsp::PulseGenerator clockDividerPulse;
@@ -126,6 +131,8 @@ struct DuoMIDI_CV : Module {
 			modFilters[c].reset();
 			assignedChannels[c] = c;
 		}
+		lastBend = 8192;
+		lastMod = 0;
 		pedal = false;
 		//MPE rotation skips "master channel" 1
 		if (polyMode == MPE_MODE && mpeMode == ROTATE_MPE)
@@ -294,7 +301,7 @@ struct DuoMIDI_CV : Module {
 					else
 						c = assignedChannels[msg.getChannel()];
 				}
-				bends[c] = ((uint16_t) msg.getValue() << 7) | msg.getNote();
+				lastBend = bends[c] = ((uint16_t) msg.getValue() << 7) | msg.getNote();
 			} break;
 			case 0xf: {
 				processSystem(msg);
@@ -314,7 +321,7 @@ struct DuoMIDI_CV : Module {
 					else
 						c = assignedChannels[msg.getChannel()];
 				}
-				mods[c] = msg.getValue();
+				lastMod = mods[c] = msg.getValue();
 			} break;
 			// sustain
 			case 0x40: {
@@ -502,6 +509,11 @@ struct DuoMIDI_CV : Module {
 		else {
 			*channel = assignChannel(note, channel);
 		}
+		// Copy modulation data from last note if enabled
+		if (useLastNoteModulation) {
+			bends[*channel] = lastBend;
+			mods[*channel] = lastMod;
+		}
 		// Set note
 		notes[*channel] = note;
 		gates[*channel] = true;
@@ -656,6 +668,12 @@ struct DuoMIDI_CV : Module {
 	}
 };
 
+struct LastNoteModulationItem : MenuItem {
+			DuoMIDI_CV *module;
+			void onAction(const event::Action &e) override {
+				module->useLastNoteModulation ^= true;
+			}
+		};
 
 struct ClockDivisionValueItem : MenuItem {
 	DuoMIDI_CV* module;
@@ -944,6 +962,10 @@ struct DuoMIDI_CVWidget : ModuleWidget {
 		channel2Item->rightText = string::f("%d", module->channels2) + " " + RIGHT_ARROW;
 		channel2Item->module = module;
 		menu->addChild(channel2Item);
+
+		LastNoteModulationItem *lastNoteModulationItem = createMenuItem<LastNoteModulationItem>("Copy Mod and Bend from Last Note", CHECKMARK(module->useLastNoteModulation));
+		lastNoteModulationItem->module = module;
+		menu->addChild(lastNoteModulationItem);
 
 		PolyModeItem* polyModeItem = new PolyModeItem;
 		polyModeItem->text = "Polyphony mode";
