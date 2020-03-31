@@ -719,7 +719,7 @@ struct BendRangeUpItem : MenuItem {
 		std::vector<float> ranges = {2.f, 5.f, 7.f, 12.f, 24.f, 36.f, 48.f, 60.f, 72.f, 84.f, 96.f};
 		for (size_t i = 0; i < ranges.size(); i++) {
 			BendRangeUpValueItem* item = new BendRangeUpValueItem;
-			item->text = string::f("+ %d", static_cast<int>(ranges[i]));
+			item->text = string::f("+ %.0f", ranges[i]);
 			item->rightText = CHECKMARK(module->bendRangeUp == ranges[i]);
 			item->module = module;
 			item->bendRangeUp = ranges[i];
@@ -746,7 +746,7 @@ struct BendRangeDownItem : MenuItem {
 		std::vector<float> ranges = {2.f, 5.f, 7.f, 12.f, 24.f, 36.f, 48.f, 60.f, 72.f, 84.f, 96.f};
 		for (size_t i = 0; i < ranges.size(); i++) {
 			BendRangeDownValueItem* item = new BendRangeDownValueItem;
-			item->text = string::f("- %d", static_cast<int>(ranges[i]));
+			item->text = string::f("- %.0f", ranges[i]);
 			item->rightText = CHECKMARK(module->bendRangeDown == ranges[i]);
 			item->module = module;
 			item->bendRangeDown = ranges[i];
@@ -756,8 +756,29 @@ struct BendRangeDownItem : MenuItem {
 	}
 };
 
+struct BendRangesItem : MenuItem {
+	DuoMIDI_CV* module;
+	Menu* createChildMenu() override {
+		Menu * menu = new Menu;
 
-struct Channel1ValueItem : MenuItem {
+		BendRangeUpItem* bendRangeUpItem = new BendRangeUpItem;
+		bendRangeUpItem->text = "Up";
+		bendRangeUpItem->rightText = string::f("%.0f", module->bendRangeUp) + " " + RIGHT_ARROW;
+		bendRangeUpItem->module = module;
+		menu->addChild(bendRangeUpItem);
+
+		BendRangeDownItem* bendRangeDownItem = new BendRangeDownItem;
+		bendRangeDownItem->text = "Down";
+		bendRangeDownItem->rightText = string::f("%.0f", module->bendRangeDown) + " " + RIGHT_ARROW;
+		bendRangeDownItem->module = module;
+		menu->addChild(bendRangeDownItem);
+
+		return menu;
+	}
+};
+
+
+struct Output1ValueItem : MenuItem {
 	DuoMIDI_CV* module;
 	int channels;
 	void onAction(const event::Action& e) override {
@@ -765,7 +786,7 @@ struct Channel1ValueItem : MenuItem {
 	}
 };
 
-struct Channel2ValueItem : MenuItem {
+struct Output2ValueItem : MenuItem {
 	DuoMIDI_CV* module;
 	int channels;
 	void onAction(const event::Action& e) override {
@@ -774,12 +795,12 @@ struct Channel2ValueItem : MenuItem {
 };
 
 
-struct Channel1Item : MenuItem {
+struct Output1Item : MenuItem {
 	DuoMIDI_CV* module;
 	Menu* createChildMenu() override {
 		Menu* menu = new Menu;
 		for (int channels = 1; channels <= 16; channels++) {
-			Channel1ValueItem* item = new Channel1ValueItem;
+			Output1ValueItem* item = new Output1ValueItem;
 			item->text = string::f("%d", channels);
 			item->rightText = CHECKMARK(module->channels1 == channels);
 			item->module = module;
@@ -791,12 +812,12 @@ struct Channel1Item : MenuItem {
 };
 
 
-struct Channel2Item : MenuItem {
+struct Output2Item : MenuItem {
 	DuoMIDI_CV* module;
 	Menu* createChildMenu() override {
 		Menu* menu = new Menu;
 		for (int channels = 0; channels <= 16; channels++) {
-			Channel2ValueItem* item = new Channel2ValueItem;
+			Output2ValueItem* item = new Output2ValueItem;
 			item->text = string::f("%d", channels);
 			item->rightText = CHECKMARK(module->channels2 == channels);
 			item->module = module;
@@ -807,6 +828,26 @@ struct Channel2Item : MenuItem {
 	}
 };
 
+struct PolyphonyChannelsItem : MenuItem {
+	DuoMIDI_CV* module;
+	Menu* createChildMenu() override {
+		Menu* menu = new Menu;
+		
+		Output1Item* output1Item = new Output1Item;
+		output1Item->text = "Output 1 Polyphony channels";
+		output1Item->rightText = string::f("%d", module->channels1) + " " + RIGHT_ARROW;
+		output1Item->module = module;
+		menu->addChild(output1Item);
+
+		Output2Item* output2Item = new Output2Item;
+		output2Item->text = "Output 2 Polyphony channels";
+		output2Item->rightText = string::f("%d", module->channels2) + " " + RIGHT_ARROW;
+		output2Item->module = module;
+		menu->addChild(output2Item);
+
+		return menu;
+	}
+};
 
 struct PolyModeValueItem : MenuItem {
 	DuoMIDI_CV* module;
@@ -846,6 +887,12 @@ struct MPEModeItem : MenuItem {
 			item->mpeMode = mpeMode;
 			menu->addChild(item);
 		}
+
+		menu->addChild(new MenuSeparator());
+		LastNoteModulationItem *lastNoteModulationItem = createMenuItem<LastNoteModulationItem>("Copy Mod and Bend from Last Note", CHECKMARK(module->useLastNoteModulation));
+		lastNoteModulationItem->module = module;
+		menu->addChild(lastNoteModulationItem);
+
 		return menu;
 	}
 };
@@ -931,7 +978,7 @@ struct DuoMIDI_CVWidget : ModuleWidget {
 	void appendContextMenu(Menu* menu) override {
 		DuoMIDI_CV* module = dynamic_cast<DuoMIDI_CV*>(this->module);
 
-		menu->addChild(new MenuEntry);
+		menu->addChild(new MenuSeparator());
 
 		ClockDivisionItem* clockDivisionItem = new ClockDivisionItem;
 		clockDivisionItem->text = "CLK/N divider";
@@ -939,39 +986,27 @@ struct DuoMIDI_CVWidget : ModuleWidget {
 		clockDivisionItem->module = module;
 		menu->addChild(clockDivisionItem);
 
-		BendRangeUpItem* bendRangeUpItem = new BendRangeUpItem;
-		bendRangeUpItem->text = "Pitch bend up range";
-		bendRangeUpItem->rightText = RIGHT_ARROW;
-		bendRangeUpItem->module = module;
-		menu->addChild(bendRangeUpItem);
+		BendRangesItem* bendRangesItem = new BendRangesItem;
+		bendRangesItem->text = "Pitch bend range";
+		bendRangesItem->rightText = string::f("%.0f", module->bendRangeUp) + "/" + string::f("%.0f", module->bendRangeDown) + " " + RIGHT_ARROW;
+		bendRangesItem->module = module;
+		menu->addChild(bendRangesItem);
 
-		BendRangeDownItem* bendRangeDownItem = new BendRangeDownItem;
-		bendRangeDownItem->text = "Pitch bend down range";
-		bendRangeDownItem->rightText = RIGHT_ARROW;
-		bendRangeDownItem->module = module;
-		menu->addChild(bendRangeDownItem);
+		menu->addChild(new MenuSeparator());
 
-		Channel1Item* channel1Item = new Channel1Item;
-		channel1Item->text = "Output 1 Polyphony channels";
-		channel1Item->rightText = string::f("%d", module->channels1) + " " + RIGHT_ARROW;
-		channel1Item->module = module;
-		menu->addChild(channel1Item);
-
-		Channel2Item* channel2Item = new Channel2Item;
-		channel2Item->text = "Output 2 Polyphony channels";
-		channel2Item->rightText = string::f("%d", module->channels2) + " " + RIGHT_ARROW;
-		channel2Item->module = module;
-		menu->addChild(channel2Item);
-
-		LastNoteModulationItem *lastNoteModulationItem = createMenuItem<LastNoteModulationItem>("Copy Mod and Bend from Last Note", CHECKMARK(module->useLastNoteModulation));
-		lastNoteModulationItem->module = module;
-		menu->addChild(lastNoteModulationItem);
+		PolyphonyChannelsItem* polyphonyChannelsItem = new PolyphonyChannelsItem;
+		polyphonyChannelsItem->text = "Polyphony channels";
+		polyphonyChannelsItem->rightText = string::f("%d", module->channels1) + "/" + string::f("%d", module->channels2) + " " + RIGHT_ARROW;
+		polyphonyChannelsItem->module = module;
+		menu->addChild(polyphonyChannelsItem);
 
 		PolyModeItem* polyModeItem = new PolyModeItem;
 		polyModeItem->text = "Polyphony mode";
 		polyModeItem->rightText = RIGHT_ARROW;
 		polyModeItem->module = module;
 		menu->addChild(polyModeItem);
+
+		menu->addChild(new MenuSeparator());
 
 		DuoMIDI_CVPanicItem* panicItem = new DuoMIDI_CVPanicItem;
 		panicItem->text = "Panic";
