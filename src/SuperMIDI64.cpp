@@ -641,10 +641,10 @@ struct SuperMIDI64 : Module {
 	}
 ///////////////////////////////////////////////////////////////////////////////////////
 	void releaseNote(uint8_t channel, uint8_t note, uint8_t vel) {
-		bool backnote = false;
+		//bool backnote = false;
 		if (polyModeIx > MPEPLUS_MODE) {
 		// Remove the note
-			if (!cachedNotes.empty()) backnote = (note == cachedNotes.back());
+			//if (!cachedNotes.empty()) backnote = (note == cachedNotes.back());
 			std::vector<uint8_t>::iterator it = std::find(cachedNotes.begin(), cachedNotes.end(), note);
 			if (it != cachedNotes.end()) cachedNotes.erase(it);
 		}else{
@@ -1324,7 +1324,7 @@ struct PolyModeDisplayC : TransparentWidget {
 				gb1f = 0;
 				if (module->learnNote == SuperMIDI64::NOTE_RANGE_SELECTOR) {
 					snoteMin = "LRN";
-					if ((lrnflash += 16) > 255) lrnflash = 0;
+					//if ((lrnflash += 16) > 255) lrnflash = 0;
 					gb1 = 0;
 					rgblrn = 0;
 				}else{
@@ -1337,7 +1337,7 @@ struct PolyModeDisplayC : TransparentWidget {
 				gb2f = 0;
 				if (module->learnNote == SuperMIDI64::NOTE_RANGE_SELECTOR + 1) {
 					snoteMax = "LRN";
-					if ((lrnflash += 16) > 255) lrnflash = 0;
+					//if ((lrnflash += 16) > 255) lrnflash = 0;
 					gb2 = 0;
 					rgblrn = 0;
 				}else{
@@ -1350,7 +1350,7 @@ struct PolyModeDisplayC : TransparentWidget {
 				gb3f = 0;
 				if (module->learnNote == SuperMIDI64::VEL_RANGE_SELECTOR) {
 					svelMin = "LRN";
-					if ((lrnflash += 16) > 255) lrnflash = 0;
+					//if ((lrnflash += 16) > 255) lrnflash = 0;
 					gb3 = 0;
 					rgblrn = 0;
 				}else{
@@ -1363,7 +1363,7 @@ struct PolyModeDisplayC : TransparentWidget {
 				gb4f = 0;
 				if (module->learnNote == SuperMIDI64::VEL_RANGE_SELECTOR + 1) {
 					svelMax = "LRN";
-					if ((lrnflash += 16) > 255) lrnflash = 0;
+					//if ((lrnflash += 16) > 255) lrnflash = 0;
 					gb4 = 0;
 					rgblrn = 0;
 				}else{
