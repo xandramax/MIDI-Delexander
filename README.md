@@ -4,7 +4,7 @@ A plugin for VCV Rack containing modules with a focus on MIDI
 ![MIDI-Delexander](https://github.com/anlexmatos/MIDI-Delexander/blob/master/MIDI-Delexander.PNG)
 
 # Duo MIDI-CV
-Based on MIDI-CV from VCV Rack Core modules
+Based on MIDI-CV from VCV Rack [Core modules](https://github.com/VCVRack/Rack/tree/v1/src/core)
 * MIDI pitch bend range is configurable via context menu
 * Bend range up and down can be set separately
 * Adds a Bent Pitch output which carries a sum of pitch bend and note data
@@ -14,7 +14,7 @@ Based on MIDI-CV from VCV Rack Core modules
 * Adds a polyphonic "Note Stop" trigger input, which resets the note on the corresponding VCV channel
 
 # Super MIDI 64
-Based on MIDIpolyMPE by Pablo Delaloza (moDllz)
+Based on MIDIpolyMPE by Pablo Delaloza ([moDllz](https://github.com/dllmusic/moDllz))
 * Quadruples all polyphonic outputs, allowing for polyphony up to 64
 * Allows for setting number of active outputs and number of voices per output
 * Adds an Output Rotation mode, wherein incoming notes are rotated first across the module's outputs and then across each output's channels (A1 -> B1 -> C1 -> A2...)
