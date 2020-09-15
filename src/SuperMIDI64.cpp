@@ -26,6 +26,7 @@ struct SuperMIDI64 : Module {
 		SUSTHOLD_PARAM,
 		RETRIG_PARAM,
 		DATAKNOB_PARAM,
+		BENDPITCH_PARAM,
 		NUM_PARAMS
 	};
 	enum InputIds {
@@ -61,7 +62,7 @@ struct SuperMIDI64 : Module {
 		MPE_MODE,
 		MPEPLUS_MODE,
 		ROTATE_MODE,
-    ROTATE_OUT_MODE,
+    	ROTATE_OUT_MODE,
 		REUSE_MODE,
 		RESET_MODE,
 		REASSIGN_MODE,
@@ -90,41 +91,41 @@ struct SuperMIDI64 : Module {
 		NUM_LCDS_SELECTORS
 	};
 	Vec coords[NUM_LCDS_SELECTORS] = {  //Selector coordinates are relative to LCD
-		Vec(9.375f, 20.f),																																			//MIDI_LCD
-		Vec(9.375f, 62.f),																																			//POLYMODE_LCD
-		Vec(1.f,		coords[POLYMODE_LCD].y),																										//POLYMODE_SELECTOR
-		Vec(1.f,		coords[POLYMODE_LCD].y + POLYMODE_ROW_HEIGHT),															//VOICES_SELECTOR
-		Vec(67.f, 	coords[POLYMODE_LCD].y + POLYMODE_ROW_HEIGHT),															//OUTS_SELECTOR
-		Vec(19.f, 	coords[POLYMODE_LCD].y + POLYMODE_ROW_HEIGHT * 2),													//NOTE_RANGE_SELECTOR 1
-		Vec(48.f, 	coords[POLYMODE_LCD].y + POLYMODE_ROW_HEIGHT * 2),													//NOTE_RANGE_SELECTOR 2
-		Vec(93.f, 	coords[POLYMODE_LCD].y + POLYMODE_ROW_HEIGHT * 2),													//VEL_RANGE_SELECTOR 1
-		Vec(113.f, 	coords[POLYMODE_LCD].y + POLYMODE_ROW_HEIGHT * 2),													//VEL_RANGE_SELECTOR 2
-		Vec(206.836f +.5f, 67.135f +.5f),		// +.5 to SVG object																//Y_LCD
-		Vec(coords[Y_LCD].x, coords[Y_LCD].y + 43.9f),																					//Z_LCD
-		Vec(coords[Y_LCD].x, coords[Y_LCD].y + 117.859),																				//RELVEL_LCD
-		Vec(163.387f +.5f, 161.425f +.5f),	// +.5 to SVG object																//TRNSP_LCD
-		Vec(coords[TRNSP_LCD].x + 30.1f, coords[TRNSP_LCD].y),																	//PBEND_LCD 1
-		Vec(coords[TRNSP_LCD].x + 55.1f, coords[TRNSP_LCD].y),																	//PBEND_LCD 2
-		Vec(12.161f +.5f, 163.477f +.5f),		// +.5 to SVG object																//CC_LCD 1
-		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD].y),																			//CC_LCD 2
-		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD].y),																			//CC_LCD 3
-		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD].y),																			//CC_LCD 4
-		Vec(coords[CC_LCD+0].x,					coords[CC_LCD].y + 40.f),																//CC_LCD 5
-		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD].y + 40.f),																//CC_LCD 6
-		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD].y + 40.f),																//CC_LCD 7
-		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD].y + 40.f),																//CC_LCD 8
-		Vec(coords[CC_LCD+0].x, 				coords[CC_LCD+4].y + 40.f),															//CC_LCD 9
-		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD+4].y + 40.f),															//CC_LCD 10
-		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD+4].y + 40.f),															//CC_LCD 11
-		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD+4].y + 40.f),															//CC_LCD 12
-		Vec(coords[CC_LCD+0].x, 				coords[CC_LCD+8].y + 40.f),															//CC_LCD 13
-		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD+8].y + 40.f),															//CC_LCD 14
-		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD+8].y + 40.f),															//CC_LCD 15
-		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD+8].y + 40.f),															//CC_LCD 16
-		Vec(coords[CC_LCD+0].x, 				coords[CC_LCD+12].y + 40.f),														//CC_LCD 17
-		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD+12].y + 40.f),														//CC_LCD 18
-		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD+12].y + 40.f),														//CC_LCD 19
-		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD+12].y + 40.f),														//CC_LCD 20
+		Vec(9.375f, 20.f),																	//MIDI_LCD
+		Vec(9.375f, 62.f),																	//POLYMODE_LCD
+		Vec(1.f,		coords[POLYMODE_LCD].y),											//POLYMODE_SELECTOR
+		Vec(1.f,		coords[POLYMODE_LCD].y + POLYMODE_ROW_HEIGHT),						//VOICES_SELECTOR
+		Vec(67.f, 	coords[POLYMODE_LCD].y + POLYMODE_ROW_HEIGHT),							//OUTS_SELECTOR
+		Vec(19.f, 	coords[POLYMODE_LCD].y + POLYMODE_ROW_HEIGHT * 2),						//NOTE_RANGE_SELECTOR 1
+		Vec(48.f, 	coords[POLYMODE_LCD].y + POLYMODE_ROW_HEIGHT * 2),						//NOTE_RANGE_SELECTOR 2
+		Vec(93.f, 	coords[POLYMODE_LCD].y + POLYMODE_ROW_HEIGHT * 2),						//VEL_RANGE_SELECTOR 1
+		Vec(113.f, 	coords[POLYMODE_LCD].y + POLYMODE_ROW_HEIGHT * 2),						//VEL_RANGE_SELECTOR 2
+		Vec(206.836f +.5f, 67.135f +.5f),		// +.5 to SVG object						//Y_LCD
+		Vec(coords[Y_LCD].x, coords[Y_LCD].y + 43.9f),										//Z_LCD
+		Vec(coords[Y_LCD].x, coords[Y_LCD].y + 117.859),									//RELVEL_LCD
+		Vec(163.387f +.5f, 161.425f +.5f),	// +.5 to SVG object							//TRNSP_LCD
+		Vec(coords[TRNSP_LCD].x + 30.1f, coords[TRNSP_LCD].y),								//PBEND_LCD 1
+		Vec(coords[TRNSP_LCD].x + 55.1f, coords[TRNSP_LCD].y),								//PBEND_LCD 2
+		Vec(12.161f +.5f, 163.477f +.5f),		// +.5 to SVG object						//CC_LCD 1
+		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD].y),									//CC_LCD 2
+		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD].y),									//CC_LCD 3
+		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD].y),									//CC_LCD 4
+		Vec(coords[CC_LCD+0].x,					coords[CC_LCD].y + 40.f),					//CC_LCD 5
+		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD].y + 40.f),							//CC_LCD 6
+		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD].y + 40.f),							//CC_LCD 7
+		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD].y + 40.f),							//CC_LCD 8
+		Vec(coords[CC_LCD+0].x, 				coords[CC_LCD+4].y + 40.f),					//CC_LCD 9
+		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD+4].y + 40.f),							//CC_LCD 10
+		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD+4].y + 40.f),							//CC_LCD 11
+		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD+4].y + 40.f),							//CC_LCD 12
+		Vec(coords[CC_LCD+0].x, 				coords[CC_LCD+8].y + 40.f),					//CC_LCD 13
+		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD+8].y + 40.f),							//CC_LCD 14
+		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD+8].y + 40.f),							//CC_LCD 15
+		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD+8].y + 40.f),							//CC_LCD 16
+		Vec(coords[CC_LCD+0].x, 				coords[CC_LCD+12].y + 40.f),				//CC_LCD 17
+		Vec(coords[CC_LCD+0].x + 33.f, 	coords[CC_LCD+12].y + 40.f),						//CC_LCD 18
+		Vec(coords[CC_LCD+1].x + 33.f, 	coords[CC_LCD+12].y + 40.f),						//CC_LCD 19
+		Vec(coords[CC_LCD+2].x + 33.f, 	coords[CC_LCD+12].y + 40.f),						//CC_LCD 20
 	};
 
 	/////
@@ -201,6 +202,7 @@ struct SuperMIDI64 : Module {
 		configParam(SUSTHOLD_PARAM, 0.f, 1.f, 1.f);
 		configParam(RETRIG_PARAM, 0.f, 1.f, 1.f);
 		configParam(DATAKNOB_PARAM, -1.f, 1.f, 0.f);
+		configParam(BENDPITCH_PARAM, 0.f, 1.f, 1.f);
 		//onReset();
 	}
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -564,9 +566,9 @@ struct SuperMIDI64 : Module {
 			case ROTATE_MODE: {
 				rotateIndex = getPolyIndex(rotateIndex);
 			} break;
-      case ROTATE_OUT_MODE: {  //Added mode for rotating first-across-then-within outputs
-        rotateIndex = getAltPolyIndex(rotateIndex);
-      } break;
+			case ROTATE_OUT_MODE: {  //Added mode for rotating first-across-then-within outputs
+				rotateIndex = getAltPolyIndex(rotateIndex);
+			} break;
 			case REUSE_MODE: {
 				bool reuse = false;
 				for (int i = 0; i < numVo; i++) {
@@ -1146,7 +1148,7 @@ struct SuperMIDI64 : Module {
 			int OUTcount = 0, VOcount = 0;  //Iterating across 4 outputs using single 64-index array
 			for (int i = 0; i < numVo; i++) {
 				float lastGate = ((gates[i] || (sustainHold && pedalgates[i])) && (!(reTrigger[i].process(args.sampleTime))))? 10.f : 0.f;
-				float thispitch = ((notes[i] - 60 + trnsps) / 12.f) + pbVoice;
+				float thispitch = ((notes[i] - 60 + trnsps) / 12.f) + (params[BENDPITCH_PARAM].getValue() == 1.f ? pbVoice : 0);
 				outputs[GATE_OUTPUT+ OUTcount].setVoltage(lastGate, i - OUTcount*numVOper);
 				outputs[X_OUTPUT+ OUTcount].setVoltage(thispitch, i - OUTcount*numVOper);
 				outputs[Y_OUTPUT+ OUTcount].setVoltage(thispitch + drift[i] , i - OUTcount*numVOper);	//drifted out
@@ -1856,13 +1858,16 @@ struct SuperMIDI64Widget : ModuleWidget {
 		for (int i = 0; i < 4; i++)
 			addOutput(createOutput<DLXPortPoly>(Vec(xPos + i * 29.192f, yPos),  module, SuperMIDI64::GATE_OUTPUT + i));
 		///Sustain hold notes switch
-		xPos = 212.237f;
+		xPos = 200.708f;
 		yPos = 334.864f;
 		addParam(createParam<DLXSwitchLed>(Vec(xPos, yPos), module, SuperMIDI64::SUSTHOLD_PARAM));
 		if (module) addChild(createLight<TranspOffRedLight>(Vec(xPos, yPos), module, SuperMIDI64::SUSTHOLD_LIGHT));
 		//Retrig
-		xPos = 232.296f;
+		xPos = 222.267f;
 		addParam(createParam<DLXSwitchLed>(Vec(xPos, yPos), module, SuperMIDI64::RETRIG_PARAM));
+		//Bend Pitch switch
+		xPos = 243.825f;
+		addParam(createParam<DLXSwitchLed>(Vec(xPos, yPos), module, SuperMIDI64::BENDPITCH_PARAM));
 		// PBend Out
 		xPos = 273.063f;
 		yPos = 159.275f;
