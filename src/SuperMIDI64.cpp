@@ -162,8 +162,8 @@ struct SuperMIDI64 : Module {
 	int numVOout = 1;
 	int numVOper = 16;
 	int numVo = numVOout * numVOper;
-	int pbMainDwn = -12;
-	int pbMainUp = 12;
+	int pbMainDwn = -2;
+	int pbMainUp = 2;
 	int pbMPE = 96;
 	int driftcents = 10;
 	int noteMin = 0;
@@ -485,24 +485,24 @@ struct SuperMIDI64 : Module {
 		return stealIndex;
 	}
 ///////////////////////////////////////////////////////////////////////////////////////
-		int getAltPolyIndex(int nowIndex) {  //This alternate function rotates the index across all active outputs, e.g. A[1] -> B[1] -> C[1] -> D[1] -> A[2]...
-			for (int i = 0; i < numVo; i++) {
-				nowIndex += numVOper;
-				if (nowIndex >= numVo)
-					nowIndex = (((nowIndex - numVo + 1) == numVOper)? 0 : nowIndex - numVo + 1);  //If we have reached the last channel of the last active output, advance to the first channel of the first output (0)
-				if (!(gates[nowIndex] || pedalgates[nowIndex])) {
-					stealIndex = nowIndex;
-					return nowIndex;
-				}
+	int getAltPolyIndex(int nowIndex) {  //This alternate function rotates the index across all active outputs, e.g. A[1] -> B[1] -> C[1] -> D[1] -> A[2]...
+		for (int i = 0; i < numVo; i++) {
+			nowIndex += numVOper;
+			if (nowIndex >= numVo)
+				nowIndex = (((nowIndex - numVo + 1) == numVOper)? 0 : nowIndex - numVo + 1);  //If we have reached the last channel of the last active output, advance to the first channel of the first output (0)
+			if (!(gates[nowIndex] || pedalgates[nowIndex])) {
+				stealIndex = nowIndex;
+				return nowIndex;
 			}
-			// All taken = steal (rotates)
-			stealIndex += numVOper;
-			if (stealIndex > (numVo - 1))
-				stealIndex = (((stealIndex - numVo + 1) == numVOper)? 0 : stealIndex - numVo + 1);
-			if ((polyModeIx < REASSIGN_MODE) && (gates[stealIndex]))//&&(polyMode > MPE_MODE).cannot reach here if MPE mode true
-				cachedNotes.push_back(notes[stealIndex]);
-			return stealIndex;
 		}
+		// All taken = steal (rotates)
+		stealIndex += numVOper;
+		if (stealIndex > (numVo - 1))
+			stealIndex = (((stealIndex - numVo + 1) == numVOper)? 0 : stealIndex - numVo + 1);
+		if ((polyModeIx < REASSIGN_MODE) && (gates[stealIndex]))//&&(polyMode > MPE_MODE).cannot reach here if MPE mode true
+			cachedNotes.push_back(notes[stealIndex]);
+		return stealIndex;
+	}
 ///////////////////////////////////////////////////////////////////////////////////////
 	void pressNote(uint8_t channel, uint8_t note, uint8_t vel) {
 		switch (learnNote){
@@ -921,7 +921,7 @@ struct SuperMIDI64 : Module {
 			else
 				releasePedal();
 		}
-		for (int i = 0; i < 8; i++){
+		for (int i = 0; i < 20; i++){
 			if (midiCCs[i] == msg.getNote()){
 				midiCCsVal[i] = msg.getValue();
 				return;
@@ -1246,7 +1246,7 @@ struct PolyModeDisplayC : TransparentWidget {
 		"M. P. E.",
 		"M. P. E. Plus",
 		"R O T A T E",
-    "R O T A T E Out",
+    	"R O T A T E Out",
 		"R E U S E",
 		"R E S E T",
 		"R E A S S I G N",
